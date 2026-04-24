@@ -1,0 +1,91 @@
+---
+title: "Hands-on Exercise 2: Beyond ggplot2 Fundamentals"
+author: "Jin Zhang"
+date: "April 24, 2026"
+date-modified: "last-modified"
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: false
+---
+
+## Loading R Packages
+
+```{r}
+pacman::p_load(ggrepel, patchwork, ggthemes, hrbrthemes, tidyverse)
+```
+
+## Importing Data
+
+```{r}
+exam_data <- read_csv("../../data/Exam_data.csv")
+```
+
+## Beyond ggplot2 Annotation: ggrepel
+
+Replacing `geom_text()` with `geom_text_repel()` to avoid overlapping labels.
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS, y = ENGLISH)) +
+  geom_point() +
+  geom_smooth(method = lm,
+              linewidth = 0.5) +
+  geom_label_repel(aes(label = ID),
+                   fontface = "bold") +
+  theme_bw() +
+  labs(title = "English scores versus Maths scores for Primary 3")
+```
+
+## Beyond ggplot2 Themes
+
+Using `theme_economist()` from ggthemes.
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20,
+                 boundary = 100,
+                 color = "grey25",
+                 fill = "grey90") +
+  theme_economist() +
+  labs(title = "Distribution of Maths Scores",
+       x = "Maths Score",
+       y = "Frequency")
+```
+
+## Composite Plots with patchwork
+
+Combining multiple plots into one figure.
+
+```{r}
+p1 <- ggplot(data = exam_data,
+             aes(x = MATHS)) +
+  geom_histogram(bins = 20,
+                 boundary = 100,
+                 color = "grey25",
+                 fill = "grey90") +
+  coord_cartesian(xlim = c(0, 100)) +
+  labs(title = "Distribution of Maths Scores")
+
+p2 <- ggplot(data = exam_data,
+             aes(x = ENGLISH)) +
+  geom_histogram(bins = 20,
+                 boundary = 100,
+                 color = "grey25",
+                 fill = "grey90") +
+  coord_cartesian(xlim = c(0, 100)) +
+  labs(title = "Distribution of English Scores")
+
+p3 <- ggplot(data = exam_data,
+             aes(x = MATHS, y = ENGLISH)) +
+  geom_point() +
+  geom_smooth(method = lm,
+              linewidth = 0.5) +
+  coord_cartesian(xlim = c(0, 100),
+                  ylim = c(0, 100)) +
+  labs(title = "English vs Maths Scores")
+
+(p1 / p2) | p3
+```

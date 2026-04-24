@@ -7,6 +7,90 @@
     "text": "About this site\n\n1 + 1\n\n[1] 2"
   },
   {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
+    "section": "",
+    "text": "pacman::p_load(tidyverse)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#loading-r-packages",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#loading-r-packages",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
+    "section": "",
+    "text": "pacman::p_load(tidyverse)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#importing-data",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#importing-data",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
+    "section": "Importing Data",
+    "text": "Importing Data\n\nexam_data &lt;- read_csv(\"../../data/Exam_data.csv\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-simple-bar-chart",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-simple-bar-chart",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
+    "section": "Plotting a Simple Bar Chart",
+    "text": "Plotting a Simple Bar Chart\n\nggplot(data = exam_data,\n       aes(x = RACE)) +\n  geom_bar()"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-histogram",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-histogram",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
+    "section": "Plotting a Histogram",
+    "text": "Plotting a Histogram\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 fill = \"steelblue\",\n                 color = \"white\") +\n  labs(title = \"Distribution of Maths Scores\",\n       x = \"Maths Score\",\n       y = \"Count\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-scatter-plot",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-scatter-plot",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
+    "section": "Plotting a Scatter Plot",
+    "text": "Plotting a Scatter Plot\n\nggplot(data = exam_data,\n       aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  labs(title = \"English vs Maths Scores\",\n       x = \"Maths Score\",\n       y = \"English Score\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html",
+    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html",
+    "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
+    "section": "",
+    "text": "pacman::p_load(ggrepel, patchwork, ggthemes, hrbrthemes, tidyverse)\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#loading-r-packages",
+    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#loading-r-packages",
+    "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
+    "section": "",
+    "text": "pacman::p_load(ggrepel, patchwork, ggthemes, hrbrthemes, tidyverse)\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#importing-data",
+    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#importing-data",
+    "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
+    "section": "Importing Data",
+    "text": "Importing Data\n\nexam_data &lt;- read_csv(\"../../data/Exam_data.csv\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-ggplot2-annotation-ggrepel",
+    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-ggplot2-annotation-ggrepel",
+    "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
+    "section": "Beyond ggplot2 Annotation: ggrepel",
+    "text": "Beyond ggplot2 Annotation: ggrepel\nReplacing geom_text() with geom_text_repel() to avoid overlapping labels.\n\nggplot(data = exam_data,\n       aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  geom_label_repel(aes(label = ID),\n                   fontface = \"bold\") +\n  theme_bw() +\n  labs(title = \"English scores versus Maths scores for Primary 3\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-ggplot2-themes",
+    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-ggplot2-themes",
+    "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
+    "section": "Beyond ggplot2 Themes",
+    "text": "Beyond ggplot2 Themes\nUsing theme_economist() from ggthemes.\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  theme_economist() +\n  labs(title = \"Distribution of Maths Scores\",\n       x = \"Maths Score\",\n       y = \"Frequency\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#composite-plots-with-patchwork",
+    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#composite-plots-with-patchwork",
+    "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
+    "section": "Composite Plots with patchwork",
+    "text": "Composite Plots with patchwork\nCombining multiple plots into one figure.\n\np1 &lt;- ggplot(data = exam_data,\n             aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  labs(title = \"Distribution of Maths Scores\")\n\np2 &lt;- ggplot(data = exam_data,\n             aes(x = ENGLISH)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  labs(title = \"Distribution of English Scores\")\n\np3 &lt;- ggplot(data = exam_data,\n             aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100)) +\n  labs(title = \"English vs Maths Scores\")\n\n(p1 / p2) | p3"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "ISSS608-VAA",

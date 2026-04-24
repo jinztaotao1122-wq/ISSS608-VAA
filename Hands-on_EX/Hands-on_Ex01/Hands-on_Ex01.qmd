@@ -1,0 +1,55 @@
+---
+title: "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods"
+author: "Jin Zhang"
+date: "April 24, 2026"
+date-modified: "last-modified"
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: false
+---
+
+## Loading R Packages
+
+```{r}
+pacman::p_load(tidyverse)
+```
+
+## Importing Data
+
+```{r}
+exam_data <- read_csv("../../data/Exam_data.csv")
+```
+
+## Plotting a Simple Bar Chart
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = RACE)) +
+  geom_bar()
+```
+
+## Plotting a Histogram
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20,
+                 fill = "steelblue",
+                 color = "white") +
+  labs(title = "Distribution of Maths Scores",
+       x = "Maths Score",
+       y = "Count")
+```
+
+## Plotting a Scatter Plot
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS, y = ENGLISH)) +
+  geom_point() +
+  labs(title = "English vs Maths Scores",
+       x = "Maths Score",
+       y = "English Score")
+```
