@@ -49,6 +49,111 @@
     "text": "Plotting a Scatter Plot\n\nggplot(data = exam_data,\n       aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  labs(title = \"English vs Maths Scores\",\n       x = \"Maths Score\",\n       y = \"English Score\")"
   },
   {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "",
+    "text": "pacman::p_load(ggiraph, plotly, patchwork, DT, tidyverse,\n               readxl, gganimate, gifski, gapminder)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#loading-r-packages",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#loading-r-packages",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "",
+    "text": "pacman::p_load(ggiraph, plotly, patchwork, DT, tidyverse,\n               readxl, gganimate, gifski, gapminder)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#importing-data",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#importing-data",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Importing Data",
+    "text": "Importing Data\n\nexam_data &lt;- read_csv(\"../../data/Exam_data.csv\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-dot-plot-with-tooltip",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-dot-plot-with-tooltip",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Interactive Dot Plot with Tooltip",
+    "text": "Interactive Dot Plot with Tooltip\nggiraph converts ggplot2 graphics into interactive SVG objects. We replace standard geoms with their _interactive counterparts and provide a tooltip aesthetic.\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(tooltip = ID),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL, breaks = NULL)\n\ngirafe(ggobj = p,\n       width_svg = 6,\n       height_svg = 6 * 0.618)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#hover-highlighting-with-data_id",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#hover-highlighting-with-data_id",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Hover Highlighting with data_id",
+    "text": "Hover Highlighting with data_id\ndata_id groups elements so hovering over one point highlights all points sharing the same value — useful for seeing class groupings at a glance.\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(data_id = CLASS),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL, breaks = NULL)\n\ngirafe(ggobj = p,\n       width_svg = 6,\n       height_svg = 6 * 0.618)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#combining-tooltip-and-hover-effect",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#combining-tooltip-and-hover-effect",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Combining Tooltip and Hover Effect",
+    "text": "Combining Tooltip and Hover Effect\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(tooltip = CLASS,\n        data_id = CLASS),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL, breaks = NULL)\n\ngirafe(ggobj = p,\n       width_svg = 6,\n       height_svg = 6 * 0.618)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#coordinated-multiple-views",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#coordinated-multiple-views",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Coordinated Multiple Views",
+    "text": "Coordinated Multiple Views\nLinking two plots so hovering over a point in one plot simultaneously highlights the same student in the other.\n\np1 &lt;- ggplot(data = exam_data,\n             aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(data_id = ID),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  scale_y_continuous(NULL, breaks = NULL)\n\np2 &lt;- ggplot(data = exam_data,\n             aes(x = ENGLISH)) +\n  geom_dotplot_interactive(\n    aes(data_id = ID),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  scale_y_continuous(NULL, breaks = NULL)\n\ngirafe(code = print(p1 + p2),\n       width_svg = 6,\n       height_svg = 3,\n       options = list(\n         opts_hover(css = \"fill: #202020;\"),\n         opts_hover_inv(css = \"opacity:0.2;\")\n       ))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#basic-interactive-scatter-plot",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#basic-interactive-scatter-plot",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Basic Interactive Scatter Plot",
+    "text": "Basic Interactive Scatter Plot\nplot_ly() creates interactive web-based visualizations. Hovering reveals values; clicking the legend toggles groups.\n\nplot_ly(data = exam_data,\n        x = ~MATHS,\n        y = ~ENGLISH,\n        color = ~RACE)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#ggplotly",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#ggplotly",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "ggplotly()",
+    "text": "ggplotly()\nggplotly() wraps any existing ggplot2 object to add interactivity with minimal extra code.\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS,\n                y = ENGLISH,\n                color = RACE)) +\n  geom_point(size = 1) +\n  theme(legend.position = \"bottom\")\n\nggplotly(p)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#coordinated-multiple-views-with-subplot",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#coordinated-multiple-views-with-subplot",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Coordinated Multiple Views with subplot()",
+    "text": "Coordinated Multiple Views with subplot()\nUsing highlight_key() and subplot() enables linked brushing — selecting points in one panel highlights the same records in the other.\n\nd &lt;- highlight_key(exam_data)\n\np1 &lt;- ggplot(data = d,\n             aes(x = MATHS,\n                 y = ENGLISH)) +\n  geom_point(size = 1) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100))\n\np2 &lt;- ggplot(data = d,\n             aes(x = MATHS,\n                 y = SCIENCE)) +\n  geom_point(size = 1) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100))\n\nsubplot(ggplotly(p1),\n        ggplotly(p2))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-data-table-with-dt",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-data-table-with-dt",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Interactive Data Table with DT",
+    "text": "Interactive Data Table with DT\n\nDT::datatable(exam_data, class = \"compact\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#importing-population-data",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#importing-population-data",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Importing Population Data",
+    "text": "Importing Population Data\n\ncol &lt;- c(\"Country\", \"Continent\")\n\nglobalPop &lt;- read_xls(\"../../data/GlobalPopulation.xls\",\n                      sheet = \"Data\") %&gt;%\n  mutate(across(all_of(col), as.factor)) %&gt;%\n  mutate(Year = as.integer(Year))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#static-bubble-plot",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#static-bubble-plot",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Static Bubble Plot",
+    "text": "Static Bubble Plot\nBefore adding animation, we build the base ggplot2 bubble chart mapping Old (% aged) to x, Young (% young) to y, and Population to point size.\n\nggplot(globalPop,\n       aes(x = Old,\n           y = Young,\n           size = Population,\n           colour = Country)) +\n  geom_point(alpha = 0.7,\n             show.legend = FALSE) +\n  scale_size(range = c(2, 12)) +\n  labs(title = \"Global Population: % Aged vs % Young\",\n       x = \"% Aged\",\n       y = \"% Young\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#animated-bubble-plot-with-gganimate",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#animated-bubble-plot-with-gganimate",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Animated Bubble Plot with gganimate",
+    "text": "Animated Bubble Plot with gganimate\ntransition_time() animates the chart across the Year variable. The title {frame_time} updates automatically each frame.\n\nggplot(globalPop,\n       aes(x = Old,\n           y = Young,\n           size = Population,\n           colour = Country)) +\n  geom_point(alpha = 0.7,\n             show.legend = FALSE) +\n  scale_size(range = c(2, 12)) +\n  labs(title = \"Year: {frame_time}\",\n       x = \"% Aged\",\n       y = \"% Young\") +\n  transition_time(Year) +\n  ease_aes(\"linear\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#animated-bubble-plot-with-plotly",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#animated-bubble-plot-with-plotly",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R",
+    "section": "Animated Bubble Plot with plotly",
+    "text": "Animated Bubble Plot with plotly\nUsing the frame aesthetic in plot_ly() adds a play button and year slider for interactive, user-controlled animation.\n\nglobalPop %&gt;%\n  plot_ly(x = ~Old,\n          y = ~Young,\n          size = ~Population,\n          color = ~Continent,\n          frame = ~Year,\n          text = ~Country,\n          hoverinfo = \"text\",\n          type = \"scatter\",\n          mode = \"markers\") %&gt;%\n  layout(showlegend = TRUE,\n         xaxis = list(title = \"% Aged\",\n                      zeroline = FALSE),\n         yaxis = list(title = \"% Young\",\n                      zeroline = FALSE))"
+  },
+  {
     "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html",
     "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html",
     "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",

@@ -1,0 +1,254 @@
+---
+title: "Hands-on Exercise 3: Interactive and Animated Data Visualisation with R"
+author: "Jin Zhang"
+date: "April 30, 2026"
+date-modified: "last-modified"
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: false
+---
+
+## Loading R Packages
+
+```{r}
+pacman::p_load(ggiraph, plotly, patchwork, DT, tidyverse,
+               readxl, gganimate, gifski, gapminder)
+```
+
+---
+
+# Part 1: Interactive Data Visualisation with ggiraph
+
+## Importing Data
+
+```{r}
+exam_data <- read_csv("../../data/Exam_data.csv")
+```
+
+## Interactive Dot Plot with Tooltip
+
+`ggiraph` converts ggplot2 graphics into interactive SVG objects. We replace standard geoms with their `_interactive` counterparts and provide a `tooltip` aesthetic.
+
+```{r}
+p <- ggplot(data = exam_data,
+            aes(x = MATHS)) +
+  geom_dotplot_interactive(
+    aes(tooltip = ID),
+    stackgroups = TRUE,
+    binwidth = 1,
+    method = "histodot") +
+  scale_y_continuous(NULL, breaks = NULL)
+
+girafe(ggobj = p,
+       width_svg = 6,
+       height_svg = 6 * 0.618)
+```
+
+## Hover Highlighting with data_id
+
+`data_id` groups elements so hovering over one point highlights all points sharing the same value — useful for seeing class groupings at a glance.
+
+```{r}
+p <- ggplot(data = exam_data,
+            aes(x = MATHS)) +
+  geom_dotplot_interactive(
+    aes(data_id = CLASS),
+    stackgroups = TRUE,
+    binwidth = 1,
+    method = "histodot") +
+  scale_y_continuous(NULL, breaks = NULL)
+
+girafe(ggobj = p,
+       width_svg = 6,
+       height_svg = 6 * 0.618)
+```
+
+## Combining Tooltip and Hover Effect
+
+```{r}
+p <- ggplot(data = exam_data,
+            aes(x = MATHS)) +
+  geom_dotplot_interactive(
+    aes(tooltip = CLASS,
+        data_id = CLASS),
+    stackgroups = TRUE,
+    binwidth = 1,
+    method = "histodot") +
+  scale_y_continuous(NULL, breaks = NULL)
+
+girafe(ggobj = p,
+       width_svg = 6,
+       height_svg = 6 * 0.618)
+```
+
+## Coordinated Multiple Views
+
+Linking two plots so hovering over a point in one plot simultaneously highlights the same student in the other.
+
+```{r}
+p1 <- ggplot(data = exam_data,
+             aes(x = MATHS)) +
+  geom_dotplot_interactive(
+    aes(data_id = ID),
+    stackgroups = TRUE,
+    binwidth = 1,
+    method = "histodot") +
+  coord_cartesian(xlim = c(0, 100)) +
+  scale_y_continuous(NULL, breaks = NULL)
+
+p2 <- ggplot(data = exam_data,
+             aes(x = ENGLISH)) +
+  geom_dotplot_interactive(
+    aes(data_id = ID),
+    stackgroups = TRUE,
+    binwidth = 1,
+    method = "histodot") +
+  coord_cartesian(xlim = c(0, 100)) +
+  scale_y_continuous(NULL, breaks = NULL)
+
+girafe(code = print(p1 + p2),
+       width_svg = 6,
+       height_svg = 3,
+       options = list(
+         opts_hover(css = "fill: #202020;"),
+         opts_hover_inv(css = "opacity:0.2;")
+       ))
+```
+
+---
+
+# Part 2: Interactive Data Visualisation with plotly
+
+## Basic Interactive Scatter Plot
+
+`plot_ly()` creates interactive web-based visualizations. Hovering reveals values; clicking the legend toggles groups.
+
+```{r}
+plot_ly(data = exam_data,
+        x = ~MATHS,
+        y = ~ENGLISH,
+        color = ~RACE)
+```
+
+## ggplotly()
+
+`ggplotly()` wraps any existing ggplot2 object to add interactivity with minimal extra code.
+
+```{r}
+p <- ggplot(data = exam_data,
+            aes(x = MATHS,
+                y = ENGLISH,
+                color = RACE)) +
+  geom_point(size = 1) +
+  theme(legend.position = "bottom")
+
+ggplotly(p)
+```
+
+## Coordinated Multiple Views with subplot()
+
+Using `highlight_key()` and `subplot()` enables linked brushing — selecting points in one panel highlights the same records in the other.
+
+```{r}
+d <- highlight_key(exam_data)
+
+p1 <- ggplot(data = d,
+             aes(x = MATHS,
+                 y = ENGLISH)) +
+  geom_point(size = 1) +
+  coord_cartesian(xlim = c(0, 100),
+                  ylim = c(0, 100))
+
+p2 <- ggplot(data = d,
+             aes(x = MATHS,
+                 y = SCIENCE)) +
+  geom_point(size = 1) +
+  coord_cartesian(xlim = c(0, 100),
+                  ylim = c(0, 100))
+
+subplot(ggplotly(p1),
+        ggplotly(p2))
+```
+
+## Interactive Data Table with DT
+
+```{r}
+DT::datatable(exam_data, class = "compact")
+```
+
+---
+
+# Part 3: Animated Data Visualisation with gganimate
+
+## Importing Population Data
+
+```{r}
+col <- c("Country", "Continent")
+
+globalPop <- read_xls("../../data/GlobalPopulation.xls",
+                      sheet = "Data") %>%
+  mutate(across(all_of(col), as.factor)) %>%
+  mutate(Year = as.integer(Year))
+```
+
+## Static Bubble Plot
+
+Before adding animation, we build the base ggplot2 bubble chart mapping Old (% aged) to x, Young (% young) to y, and Population to point size.
+
+```{r}
+ggplot(globalPop,
+       aes(x = Old,
+           y = Young,
+           size = Population,
+           colour = Country)) +
+  geom_point(alpha = 0.7,
+             show.legend = FALSE) +
+  scale_size(range = c(2, 12)) +
+  labs(title = "Global Population: % Aged vs % Young",
+       x = "% Aged",
+       y = "% Young")
+```
+
+## Animated Bubble Plot with gganimate
+
+`transition_time()` animates the chart across the `Year` variable. The title `{frame_time}` updates automatically each frame.
+
+```{r}
+ggplot(globalPop,
+       aes(x = Old,
+           y = Young,
+           size = Population,
+           colour = Country)) +
+  geom_point(alpha = 0.7,
+             show.legend = FALSE) +
+  scale_size(range = c(2, 12)) +
+  labs(title = "Year: {frame_time}",
+       x = "% Aged",
+       y = "% Young") +
+  transition_time(Year) +
+  ease_aes("linear")
+```
+
+## Animated Bubble Plot with plotly
+
+Using the `frame` aesthetic in `plot_ly()` adds a play button and year slider for interactive, user-controlled animation.
+
+```{r}
+globalPop %>%
+  plot_ly(x = ~Old,
+          y = ~Young,
+          size = ~Population,
+          color = ~Continent,
+          frame = ~Year,
+          text = ~Country,
+          hoverinfo = "text",
+          type = "scatter",
+          mode = "markers") %>%
+  layout(showlegend = TRUE,
+         xaxis = list(title = "% Aged",
+                      zeroline = FALSE),
+         yaxis = list(title = "% Young",
+                      zeroline = FALSE))
+```
