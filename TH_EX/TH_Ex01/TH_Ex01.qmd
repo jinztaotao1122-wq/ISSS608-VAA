@@ -1,0 +1,340 @@
+---
+title: "Take-home Exercise 1: Visual Analytics for Data Discovery"
+author: "Jin Zhang"
+date: "9 May 2026"
+date-modified: "last-modified"
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: false
+format:
+  html:
+    theme: cosmo
+    css: ../../styles.css
+    toc: true
+    code-fold: show
+    code-tools: true
+---
+
+## Overview
+
+This report investigates a real-world motor vehicle insurance portfolio from Spain to identify the main drivers of portfolio **profitability** and **volatility**. Following the take-home brief, the analysis uses tidyverse for data processing and ggplot2 plus its extensions for visual analytics.
+
+The core business questions are:
+
+1. Which policy, customer and vehicle segments are associated with weaker profitability?
+2. Which segments show higher claim volatility through elevated claim frequency or claim severity?
+3. What actions should an insurer prioritise to improve portfolio performance?
+
+## Analytical Sandbox
+
+### Packages
+
+```{r}
+pacman::p_load(tidyverse, patchwork, ggdist, ggridges, scales, knitr, readxl)
+source("th_ex1_utils.R")
+```
+
+### Data Input
+
+```{r}
+portfolio <- prepare_motor_data("../../data/motor_insurance_portfolio.csv")
+codebook <- readxl::read_excel("../../data/motor_insurance_codebook.xlsx")
+snapshot_tbl <- portfolio_snapshot(portfolio)
+test_tbl <- metric_test_table(
+  portfolio,
+  c(
+    "policy_type",
+    "business_type",
+    "bonus_score",
+    "payment_frequency",
+    "fuel_type",
+    "municipality_type",
+    "circulation_area",
+    "year"
+  )
+)
+```
+
+The source dataset contains policy-level records from **2022 to 2024** together with premiums, claims, incurred losses and exposure. The codebook confirms 47 operational variables spanning policy design, underwriting profile, vehicle characteristics, premium components and claim outcomes.
+
+```{r}
+knitr::kable(snapshot_tbl, col.names = c("Metric", "Value"))
+```
+
+## Data Preparation
+
+### Wrangling Workflow
+
+The analytical sandbox was prepared with the following steps:
+
+1. Import the semicolon-delimited CSV using `read_delim()`.
+2. Validate the 47 variables against the accompanying codebook.
+3. Derive business metrics required by the brief:
+   - `loss_ratio = total_incurred / total_premium`
+   - `claim_frequency = total_claims / total_exposure`
+   - `claim_severity = total_incurred / total_claims`
+   - `premium_per_exposure`, `pure_premium`, `total_margin`
+   - age and value bands for interpretable segmentation
+4. Cap `loss_ratio` and `claim_frequency` at the 99th percentile for distribution plots, while keeping uncapped values for aggregated portfolio metrics.
+5. Retain the 49 records with zero premium and zero exposure in the base data, but exclude them automatically from ratio calculations to avoid infinite results.
+
+### Variable Grouping Reference
+
+```{r}
+codebook |>
+  tidyr::fill(Group) |>
+  dplyr::filter(!is.na(Variables)) |>
+  dplyr::select(Variables, Group) |>
+  head(15) |>
+  knitr::kable()
+```
+
+## Executive Summary of Findings
+
+Four messages stand out from the analysis:
+
+1. **Comprehensive products drive the weakest profitability.** `COMP_N` has the highest claim frequency and loss ratio, and its loss ratio exceeded 1.0 in 2024.
+2. **Portfolio renewals underperform new business.** The existing portfolio segment shows consistently higher claim incidence, claim frequency and loss ratio than new business.
+3. **Billing cadence and underwriting quality matter.** Semiannual and quarterly payment plans perform worse than annual plans, while favourable bonus scores materially reduce claim risk.
+4. **The portfolio deteriorated in 2024.** Loss ratio rose to roughly 74.7% in 2024 from about 65.6% in 2022, indicating worsening profitability despite only modest movement in claim severity.
+
+## Univariate Visual Analytics
+
+### Portfolio Mix by Exposure
+
+```{r}
+mix_tbl <- portfolio |>
+  dplyr::group_by(policy_type) |>
+  dplyr::summarise(exposure = sum(total_exposure, na.rm = TRUE), .groups = "drop") |>
+  dplyr::mutate(exposure_share = exposure / sum(exposure)) |>
+  dplyr::arrange(desc(exposure_share))
+
+mix_plot <- ggplot(mix_tbl, aes(x = forcats::fct_reorder(policy_type, exposure_share), y = exposure_share, fill = policy_type)) +
+  geom_col(width = 0.7, show.legend = FALSE) +
+  geom_text(aes(label = scales::percent(exposure_share, accuracy = 0.1)), hjust = -0.1, size = 3.6) +
+  coord_flip() +
+  scale_fill_manual(values = portfolio_cols) +
+  scale_y_continuous(labels = scales::label_percent(), expand = expansion(mult = c(0, 0.08))) +
+  labs(
+    title = "Exposure is concentrated in CC and COMP_E policies",
+    subtitle = "Policy mix should be read in exposure terms rather than raw policy counts",
+    x = NULL,
+    y = "Exposure share"
+  ) +
+  portfolio_theme()
+
+mix_plot
+```
+
+The portfolio is structurally concentrated in `CC` and `COMP_E`. This matters because portfolio profitability can be heavily influenced by the performance of these dominant product lines.
+
+### Distribution of Key Numeric Variables
+
+```{r}
+age_plot <- ggplot(portfolio, aes(x = driver_age)) +
+  geom_histogram(binwidth = 3, fill = accent_cols["primary"], colour = "white", alpha = 0.9) +
+  labs(title = "Driver ages cluster in mature segments", x = "Driver age", y = "Policies") +
+  portfolio_theme()
+
+value_plot <- ggplot(portfolio, aes(x = vehicle_value)) +
+  geom_histogram(binwidth = 5000, fill = accent_cols["secondary"], colour = "white", alpha = 0.9) +
+  scale_x_continuous(labels = scales::label_dollar(prefix = "EUR ", accuracy = 1)) +
+  labs(title = "Vehicle values are strongly right-skewed", x = "Vehicle value", y = "Policies") +
+  portfolio_theme()
+
+premium_plot <- ggplot(portfolio, aes(x = total_premium)) +
+  geom_histogram(binwidth = 25, fill = accent_cols["highlight"], colour = "white", alpha = 0.9) +
+  coord_cartesian(xlim = c(0, 1200)) +
+  scale_x_continuous(labels = scales::label_dollar(prefix = "EUR ", accuracy = 1)) +
+  labs(title = "Most premiums sit in the lower-price range", x = "Total premium", y = "Policies") +
+  portfolio_theme()
+
+(age_plot | value_plot) / premium_plot
+```
+
+The numerical variables reveal a mature driver base, very skewed vehicle values, and a premium distribution concentrated at lower price points. These shapes justify the use of robust visual summaries and non-parametric statistical tests later in the report.
+
+## Bivariate Visual Analytics for Profitability
+
+### Policy Type is the Strongest Profitability Driver
+
+```{r}
+policy_perf <- segment_metrics(portfolio, "policy_type") |>
+  dplyr::mutate(group = forcats::fct_reorder(group, loss_ratio))
+
+policy_lr_plot <- ggplot(policy_perf, aes(x = group, y = loss_ratio, fill = group)) +
+  geom_col(width = 0.7, show.legend = FALSE) +
+  geom_text(aes(label = scales::percent(loss_ratio, accuracy = 0.1)), vjust = -0.25, size = 3.3) +
+  scale_fill_manual(values = portfolio_cols) +
+  scale_y_continuous(labels = scales::label_percent(), expand = expansion(mult = c(0, 0.08))) +
+  labs(
+    title = "Comprehensive products record the weakest profitability",
+    subtitle = "Exposure-weighted loss ratio by policy type",
+    x = NULL,
+    y = "Loss ratio"
+  ) +
+  portfolio_theme()
+
+policy_freq_plot <- ggplot(policy_perf, aes(x = group, y = claim_frequency, fill = group)) +
+  geom_col(width = 0.7, show.legend = FALSE) +
+  geom_text(aes(label = scales::number(claim_frequency, accuracy = 0.01)), vjust = -0.25, size = 3.3) +
+  scale_fill_manual(values = portfolio_cols) +
+  labs(
+    title = "Claim frequency follows the same pattern",
+    subtitle = "Claims per unit of exposure by policy type",
+    x = NULL,
+    y = "Claim frequency"
+  ) +
+  portfolio_theme()
+
+policy_lr_plot | policy_freq_plot
+```
+
+`COMP_N` is the least profitable segment, with the highest exposure-adjusted claim frequency and the highest loss ratio. At the other end, `TP` is materially more profitable. This suggests that product design, coverage breadth and pricing structure are central portfolio levers.
+
+### Profitability Deteriorated in 2024
+
+```{r}
+year_type_tbl <- portfolio |>
+  dplyr::group_by(year, policy_type) |>
+  dplyr::summarise(
+    exposure = sum(total_exposure, na.rm = TRUE),
+    loss_ratio = sum(total_incurred, na.rm = TRUE) / sum(total_premium, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+ggplot(year_type_tbl, aes(x = factor(year), y = policy_type, fill = loss_ratio)) +
+  geom_tile(colour = "white") +
+  geom_text(aes(label = scales::percent(loss_ratio, accuracy = 0.1)), size = 3.2) +
+  scale_fill_gradient(low = "#d9f0f3", high = "#9d0208", labels = scales::label_percent()) +
+  labs(
+    title = "2024 shows a broad-based profitability deterioration",
+    subtitle = "Loss ratio by year and policy type",
+    x = NULL,
+    y = NULL,
+    fill = "Loss ratio"
+  ) +
+  portfolio_theme()
+```
+
+The worsening in 2024 is not isolated to one niche segment. It is strongest in comprehensive covers, especially `COMP_N`, where the loss ratio crossed the breakeven threshold of 100%.
+
+## Bivariate Visual Analytics for Volatility
+
+### Volatility is Elevated in Comprehensive Covers
+
+```{r}
+dist_sample <- sample_for_distribution(portfolio, n = 50000)
+
+ggplot(
+  dist_sample |>
+    dplyr::filter(policy_type %in% c("TP", "TPG", "CC", "COMP_E", "COMP_N")),
+  aes(x = policy_type, y = claim_severity, fill = policy_type)
+) +
+  ggdist::stat_halfeye(
+    adjust = 0.5,
+    width = 0.6,
+    .width = c(0.5, 0.8, 0.95),
+    justification = -0.25,
+    point_colour = NA
+  ) +
+  geom_boxplot(width = 0.12, outlier.shape = NA, alpha = 0.45) +
+  scale_fill_manual(values = portfolio_cols) +
+  scale_y_log10(labels = scales::label_dollar(prefix = "EUR ", accuracy = 1)) +
+  labs(
+    title = "Claim severity is both high and dispersed in comprehensive segments",
+    subtitle = "Half-eye + boxplot of claim severity on a log scale",
+    x = NULL,
+    y = "Claim severity"
+  ) +
+  portfolio_theme()
+```
+
+Volatility is not just about average loss ratio. The half-eye distributions show that comprehensive products also carry wider severity spreads, which creates higher earnings uncertainty even when average profitability looks manageable.
+
+### Billing Frequency and Underwriting Quality Segment the Risk
+
+```{r}
+billing_tbl <- segment_metrics(portfolio, "payment_frequency") |>
+  dplyr::mutate(group = forcats::fct_relevel(group, "A", "S", "Q"))
+
+bonus_tbl <- segment_metrics(portfolio, "bonus_score") |>
+  dplyr::mutate(group = forcats::fct_relevel(group, "G", "N", "B"))
+
+billing_plot <- ggplot(billing_tbl, aes(x = group, y = loss_ratio, fill = group)) +
+  geom_col(width = 0.65, show.legend = FALSE) +
+  geom_text(aes(label = scales::percent(loss_ratio, accuracy = 0.1)), vjust = -0.2, size = 3.3) +
+  scale_y_continuous(labels = scales::label_percent(), expand = expansion(mult = c(0, 0.08))) +
+  labs(title = "Annual billing performs best", x = "Payment frequency", y = "Loss ratio") +
+  portfolio_theme()
+
+bonus_plot <- ggplot(bonus_tbl, aes(x = group, y = claim_frequency, fill = group)) +
+  geom_col(width = 0.65, show.legend = FALSE) +
+  geom_text(aes(label = scales::number(claim_frequency, accuracy = 0.01)), vjust = -0.2, size = 3.3) +
+  labs(title = "Favourable bonus scores reduce claim frequency", x = "Bonus score", y = "Claim frequency") +
+  portfolio_theme()
+
+billing_plot | bonus_plot
+```
+
+Payment cadence and bonus score are practical underwriting signals. Annual billing is materially more profitable than semiannual or quarterly billing, while `G` bonus scores clearly outperform `N` and `B`.
+
+### Vehicle Value and Driver Age Refine the Story
+
+```{r}
+age_value_tbl <- portfolio |>
+  dplyr::group_by(driver_age_band, vehicle_value_band) |>
+  dplyr::summarise(
+    exposure = sum(total_exposure, na.rm = TRUE),
+    loss_ratio = sum(total_incurred, na.rm = TRUE) / sum(total_premium, na.rm = TRUE),
+    claim_frequency = sum(total_claims, na.rm = TRUE) / sum(total_exposure, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  dplyr::filter(!is.na(driver_age_band), !is.na(vehicle_value_band))
+
+ggplot(age_value_tbl, aes(x = driver_age_band, y = vehicle_value_band)) +
+  geom_point(aes(size = exposure, colour = loss_ratio)) +
+  scale_size_continuous(labels = scales::comma) +
+  scale_colour_gradient(low = "#94d2bd", high = "#9d0208", labels = scales::label_percent()) +
+  labs(
+    title = "High-value vehicles push profitability downward across age bands",
+    subtitle = "Bubble size encodes exposure; colour encodes loss ratio",
+    x = "Driver age band",
+    y = "Vehicle value band",
+    size = "Exposure",
+    colour = "Loss ratio"
+  ) +
+  portfolio_theme()
+```
+
+Higher vehicle values are associated with weaker profitability across most age bands. Younger drivers have the highest claim frequency, but the broader profitability problem is not limited to youth; it also appears in large mature segments exposed to high-value vehicles.
+
+## Statistical Validation
+
+The assignment requires the analysis to go beyond visual description. The following table summarises statistical checks applied to the main segmentation variables:
+
+- `chisq.test()` on `claim_flag`
+- `kruskal.test()` on capped `loss_ratio`
+- `kruskal.test()` on capped `claim_frequency`
+
+```{r}
+knitr::kable(test_tbl, col.names = c("Factor", "Claim flag p-value", "Loss ratio p-value", "Claim frequency p-value"))
+```
+
+All tested segmentation variables are statistically significant at conventional thresholds. This reinforces the visual evidence that product type, business type, bonus score, billing cadence, fuel type, geography and year all matter for the portfolio's risk profile.
+
+## Recommendations
+
+Based on the visual analytics evidence, the insurer should prioritise five actions:
+
+1. **Reprice or redesign comprehensive covers**, especially `COMP_N`, because they combine weak profitability with high volatility.
+2. **Review portfolio renewals more closely than new business**, since the existing portfolio carries worse frequency and profitability outcomes.
+3. **Promote annual billing and review surcharges on instalment plans**, because quarterly and semiannual billing underperform.
+4. **Use bonus score more aggressively in underwriting and retention**, as favourable claims history is one of the clearest risk separators.
+5. **Drill into the 2024 deterioration**, especially within comprehensive products and high-value vehicles, to distinguish pricing drift from claims inflation.
+
+## Conclusion
+
+This take-home exercise shows how visual analytics helps move beyond dashboard reporting into portfolio discovery. The portfolio is dominated by a few product lines, and those product lines do not perform equally. Comprehensive covers, portfolio renewals, non-annual billing, weak bonus scores and higher-value vehicles all contribute to lower profitability or higher volatility. Just as importantly, the deterioration observed in 2024 suggests that the insurer should treat the problem as dynamic rather than static.
