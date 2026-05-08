@@ -1,46 +1,78 @@
 ---
 title: "Hands-on Exercise 2: Beyond ggplot2 Fundamentals"
 author: "Jin Zhang"
-date: "April 24, 2026"
+date: "8 May 2026"
 date-modified: "last-modified"
 execute:
   echo: true
+  eval: true
   warning: false
   message: false
   freeze: false
 ---
 
-## Loading R Packages
+## 2.1 Overview
+
+In this exercise we explore ggplot2 extensions for more elegant and effective statistical graphics:
+
+- **ggrepel** for non-overlapping text annotations
+- **ggthemes** and **hrbrthemes** for professional themes
+- **patchwork** for combining multiple plots
+
+## 2.2 Getting Started
+
+### 2.2.1 Installing and Loading Packages
 
 ```{r}
-pacman::p_load(ggrepel, patchwork, ggthemes, hrbrthemes, tidyverse)
+pacman::p_load(ggrepel, patchwork,
+               ggthemes, hrbrthemes,
+               tidyverse)
 ```
 
-## Importing Data
+### 2.2.2 Importing Data
 
 ```{r}
 exam_data <- read_csv("../../data/Exam_data.csv")
 ```
 
-## Beyond ggplot2 Annotation: ggrepel
+## 2.3 Beyond ggplot2 Annotation: ggrepel
 
-Replacing `geom_text()` with `geom_text_repel()` to avoid overlapping labels.
+### 2.3.1 Problem - overlapping labels with geom_label
 
 ```{r}
 ggplot(data = exam_data,
-       aes(x = MATHS, y = ENGLISH)) +
+       aes(x = MATHS,
+           y = ENGLISH)) +
+  geom_point() +
+  geom_smooth(method = lm,
+              linewidth = 0.5) +
+  geom_label(aes(label = ID),
+             hjust = .5,
+             vjust = -.5) +
+  coord_cartesian(xlim = c(0, 100),
+                  ylim = c(0, 100)) +
+  ggtitle("English scores versus Maths scores for Primary 3")
+```
+
+### 2.3.2 Solution - geom_label_repel
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS,
+           y = ENGLISH)) +
   geom_point() +
   geom_smooth(method = lm,
               linewidth = 0.5) +
   geom_label_repel(aes(label = ID),
                    fontface = "bold") +
-  theme_bw() +
-  labs(title = "English scores versus Maths scores for Primary 3")
+  coord_cartesian(xlim = c(0, 100),
+                  ylim = c(0, 100)) +
+  ggtitle("English scores versus Maths scores for Primary 3")
 ```
 
-## Beyond ggplot2 Themes
+## 2.4 Beyond ggplot2 Themes
 
-Using `theme_economist()` from ggthemes.
+### 2.4.1 Default theme_gray
 
 ```{r}
 ggplot(data = exam_data,
@@ -49,15 +81,54 @@ ggplot(data = exam_data,
                  boundary = 100,
                  color = "grey25",
                  fill = "grey90") +
-  theme_economist() +
-  labs(title = "Distribution of Maths Scores",
-       x = "Maths Score",
-       y = "Frequency")
+  theme_gray() +
+  ggtitle("Distribution of Maths scores")
 ```
 
-## Composite Plots with patchwork
+### 2.4.2 Working with ggthemes - The Economist theme
 
-Combining multiple plots into one figure.
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20,
+                 boundary = 100,
+                 color = "grey25",
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_economist()
+```
+
+### 2.4.3 Working with hrbrthemes
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20,
+                 boundary = 100,
+                 color = "grey25",
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_ipsum()
+```
+
+### 2.4.4 hrbrthemes with axis and grid customisation
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20,
+                 boundary = 100,
+                 color = "grey25",
+                 fill = "grey90") +
+  ggtitle("Distribution of Maths scores") +
+  theme_ipsum(axis_title_size = 18,
+              base_size = 15,
+              grid = "Y")
+```
+
+## 2.5 Beyond Single Graph: patchwork
+
+### 2.5.1 Create individual plots
 
 ```{r}
 p1 <- ggplot(data = exam_data,
@@ -67,7 +138,7 @@ p1 <- ggplot(data = exam_data,
                  color = "grey25",
                  fill = "grey90") +
   coord_cartesian(xlim = c(0, 100)) +
-  labs(title = "Distribution of Maths Scores")
+  ggtitle("Distribution of Maths scores")
 
 p2 <- ggplot(data = exam_data,
              aes(x = ENGLISH)) +
@@ -76,16 +147,51 @@ p2 <- ggplot(data = exam_data,
                  color = "grey25",
                  fill = "grey90") +
   coord_cartesian(xlim = c(0, 100)) +
-  labs(title = "Distribution of English Scores")
+  ggtitle("Distribution of English scores")
 
 p3 <- ggplot(data = exam_data,
-             aes(x = MATHS, y = ENGLISH)) +
+             aes(x = MATHS,
+                 y = ENGLISH)) +
   geom_point() +
   geom_smooth(method = lm,
               linewidth = 0.5) +
   coord_cartesian(xlim = c(0, 100),
                   ylim = c(0, 100)) +
-  labs(title = "English vs Maths Scores")
+  ggtitle("English vs Maths scores")
+```
 
+### 2.5.2 Combining two plots side by side
+
+```{r}
+p1 + p2
+```
+
+### 2.5.3 Combining three plots
+
+```{r}
 (p1 / p2) | p3
+```
+
+### 2.5.4 Creating composite figure with tag
+
+```{r}
+((p1 / p2) | p3) +
+  plot_annotation(tag_levels = "I")
+```
+
+### 2.5.5 Creating figure with inset
+
+```{r}
+p3 + inset_element(p2,
+                   left = 0.02,
+                   bottom = 0.7,
+                   right = 0.5,
+                   top = 1)
+```
+
+### 2.5.6 Composite figure with patchwork and ggtheme
+
+```{r}
+patchwork <- (p1 / p2) | p3
+patchwork & theme_economist()
 ```

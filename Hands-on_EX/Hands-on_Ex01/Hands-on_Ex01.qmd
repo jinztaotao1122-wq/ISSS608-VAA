@@ -1,28 +1,65 @@
 ---
-title: "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods"
+title: "Hands-on Exercise 1: A Layered Grammar of Graphics"
 author: "Jin Zhang"
-date: "April 24, 2026"
+date: "8 May 2026"
 date-modified: "last-modified"
 execute:
   echo: true
+  eval: true
   warning: false
   message: false
   freeze: false
 ---
 
-## Loading R Packages
+## 1.1 Learning Outcome
+
+In this exercise, we learn the basic principles and essential components of **ggplot2** to create elegant and functional statistical graphics based on the Layered Grammar of Graphics.
+
+## 1.2 Getting Started
+
+### 1.2.1 Installing and Loading Packages
 
 ```{r}
 pacman::p_load(tidyverse)
 ```
 
-## Importing Data
+### 1.2.2 Importing Data
 
 ```{r}
 exam_data <- read_csv("../../data/Exam_data.csv")
 ```
 
-## Plotting a Simple Bar Chart
+## 1.3 R Graphics vs ggplot2
+
+```{r}
+hist(exam_data$MATHS)
+```
+
+```{r}
+ggplot(data = exam_data, aes(x = MATHS)) +
+  geom_histogram(bins = 10,
+                 boundary = 100,
+                 color = "black",
+                 fill = "grey") +
+  ggtitle("Distribution of Maths scores")
+```
+
+## 1.4 Essential Elements: data
+
+```{r}
+ggplot(data = exam_data)
+```
+
+## 1.5 Essential Elements: Aesthetic Mappings
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS))
+```
+
+## 1.6 Essential Elements: geom
+
+### 1.6.1 geom_bar
 
 ```{r}
 ggplot(data = exam_data,
@@ -30,26 +67,180 @@ ggplot(data = exam_data,
   geom_bar()
 ```
 
-## Plotting a Histogram
+### 1.6.2 geom_dotplot
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_dotplot(dotsize = 0.5)
+```
+
+### 1.6.3 geom_histogram
 
 ```{r}
 ggplot(data = exam_data,
        aes(x = MATHS)) +
   geom_histogram(bins = 20,
-                 fill = "steelblue",
-                 color = "white") +
-  labs(title = "Distribution of Maths Scores",
-       x = "Maths Score",
-       y = "Count")
+                 color = "black",
+                 fill = "light blue")
 ```
 
-## Plotting a Scatter Plot
+### 1.6.4 Modify geom() - change fill colour by gender
 
 ```{r}
 ggplot(data = exam_data,
-       aes(x = MATHS, y = ENGLISH)) +
+       aes(x = MATHS,
+           fill = GENDER)) +
+  geom_histogram(bins = 20,
+                 color = "grey30")
+```
+
+### 1.6.5 geom_density
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS,
+           colour = GENDER)) +
+  geom_density()
+```
+
+### 1.6.6 geom_boxplot
+
+```{r}
+ggplot(data = exam_data,
+       aes(y = MATHS,
+           x = GENDER)) +
+  geom_boxplot()
+```
+
+```{r}
+ggplot(data = exam_data,
+       aes(y = MATHS,
+           x = GENDER)) +
+  geom_boxplot(notch = TRUE)
+```
+
+### 1.6.7 geom_violin
+
+```{r}
+ggplot(data = exam_data,
+       aes(y = MATHS,
+           x = GENDER)) +
+  geom_violin()
+```
+
+### 1.6.8 geom_point - scatter plot
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS,
+           y = ENGLISH)) +
+  geom_point()
+```
+
+### 1.6.9 Combining geom objects
+
+```{r}
+ggplot(data = exam_data,
+       aes(y = MATHS,
+           x = GENDER)) +
+  geom_boxplot() +
+  geom_point(position = "jitter",
+             size = 0.5)
+```
+
+## 1.7 Essential Elements: stat
+
+### 1.7.1 stat_summary - add mean
+
+```{r}
+ggplot(data = exam_data,
+       aes(y = MATHS,
+           x = GENDER)) +
+  geom_boxplot() +
+  stat_summary(geom = "point",
+               fun = "mean",
+               colour = "red",
+               size = 4)
+```
+
+### 1.7.2 Using geom() method with stat
+
+```{r}
+ggplot(data = exam_data,
+       aes(y = MATHS,
+           x = GENDER)) +
+  geom_boxplot() +
+  geom_point(stat = "summary",
+             fun = "mean",
+             colour = "red",
+             size = 4)
+```
+
+### 1.7.3 Best fit curve with geom_smooth
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS,
+           y = ENGLISH)) +
   geom_point() +
-  labs(title = "English vs Maths Scores",
-       x = "Maths Score",
-       y = "English Score")
+  geom_smooth(method = lm,
+              linewidth = 0.5)
+```
+
+## 1.8 Essential Elements: Facets
+
+### 1.8.1 facet_wrap
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20) +
+  facet_wrap(~ CLASS)
+```
+
+### 1.8.2 facet_grid
+
+```{r}
+ggplot(data = exam_data,
+       aes(y = MATHS,
+           x = CLASS)) +
+  geom_boxplot() +
+  facet_grid(GENDER ~ .)
+```
+
+## 1.9 Essential Elements: Coordinates
+
+### 1.9.1 Flip axes with coord_flip
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = RACE)) +
+  geom_bar() +
+  coord_flip()
+```
+
+### 1.9.2 Change axis range with coord_cartesian
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS,
+           y = ENGLISH)) +
+  geom_point() +
+  geom_smooth(method = lm,
+              linewidth = 0.5) +
+  coord_cartesian(xlim = c(0, 100),
+                  ylim = c(0, 100))
+```
+
+## 1.10 Essential Elements: Themes
+
+### 1.10.1 theme_gray (default)
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = RACE)) +
+  geom_bar() +
+  coord_flip() +
+  theme_gray()
 ```

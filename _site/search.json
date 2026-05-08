@@ -9,86 +9,352 @@
   {
     "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html",
     "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html",
-    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
     "section": "",
-    "text": "pacman::p_load(tidyverse)"
+    "text": "In this exercise, we learn the basic principles and essential components of ggplot2 to create elegant and functional statistical graphics based on the Layered Grammar of Graphics."
   },
   {
-    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#loading-r-packages",
-    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#loading-r-packages",
-    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#learning-outcome",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#learning-outcome",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
     "section": "",
-    "text": "pacman::p_load(tidyverse)"
+    "text": "In this exercise, we learn the basic principles and essential components of ggplot2 to create elegant and functional statistical graphics based on the Layered Grammar of Graphics."
   },
   {
-    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#importing-data",
-    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#importing-data",
-    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
-    "section": "Importing Data",
-    "text": "Importing Data\n\nexam_data &lt;- read_csv(\"../../data/Exam_data.csv\")"
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#getting-started",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#getting-started",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
+    "section": "1.2 Getting Started",
+    "text": "1.2 Getting Started\n\n1.2.1 Installing and Loading Packages\n\npacman::p_load(tidyverse)\n\n\n\n1.2.2 Importing Data\n\nexam_data &lt;- read_csv(\"../../data/Exam_data.csv\")"
   },
   {
-    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-simple-bar-chart",
-    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-simple-bar-chart",
-    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
-    "section": "Plotting a Simple Bar Chart",
-    "text": "Plotting a Simple Bar Chart\n\nggplot(data = exam_data,\n       aes(x = RACE)) +\n  geom_bar()"
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#r-graphics-vs-ggplot2",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#r-graphics-vs-ggplot2",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
+    "section": "1.3 R Graphics vs ggplot2",
+    "text": "1.3 R Graphics vs ggplot2\n\nhist(exam_data$MATHS)\n\n\n\n\n\n\n\n\n\nggplot(data = exam_data, aes(x = MATHS)) +\n  geom_histogram(bins = 10,\n                 boundary = 100,\n                 color = \"black\",\n                 fill = \"grey\") +\n  ggtitle(\"Distribution of Maths scores\")"
   },
   {
-    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-histogram",
-    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-histogram",
-    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
-    "section": "Plotting a Histogram",
-    "text": "Plotting a Histogram\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 fill = \"steelblue\",\n                 color = \"white\") +\n  labs(title = \"Distribution of Maths Scores\",\n       x = \"Maths Score\",\n       y = \"Count\")"
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-data",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-data",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
+    "section": "1.4 Essential Elements: data",
+    "text": "1.4 Essential Elements: data\n\nggplot(data = exam_data)"
   },
   {
-    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-scatter-plot",
-    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#plotting-a-scatter-plot",
-    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics: ggplot2 methods",
-    "section": "Plotting a Scatter Plot",
-    "text": "Plotting a Scatter Plot\n\nggplot(data = exam_data,\n       aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  labs(title = \"English vs Maths Scores\",\n       x = \"Maths Score\",\n       y = \"English Score\")"
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-aesthetic-mappings",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-aesthetic-mappings",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
+    "section": "1.5 Essential Elements: Aesthetic Mappings",
+    "text": "1.5 Essential Elements: Aesthetic Mappings\n\nggplot(data = exam_data,\n       aes(x = MATHS))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-geom",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-geom",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
+    "section": "1.6 Essential Elements: geom",
+    "text": "1.6 Essential Elements: geom\n\n1.6.1 geom_bar\n\nggplot(data = exam_data,\n       aes(x = RACE)) +\n  geom_bar()\n\n\n\n\n\n\n\n\n\n\n1.6.2 geom_dotplot\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_dotplot(dotsize = 0.5)\n\n\n\n\n\n\n\n\n\n\n1.6.3 geom_histogram\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 color = \"black\",\n                 fill = \"light blue\")\n\n\n\n\n\n\n\n\n\n\n1.6.4 Modify geom() - change fill colour by gender\n\nggplot(data = exam_data,\n       aes(x = MATHS,\n           fill = GENDER)) +\n  geom_histogram(bins = 20,\n                 color = \"grey30\")\n\n\n\n\n\n\n\n\n\n\n1.6.5 geom_density\n\nggplot(data = exam_data,\n       aes(x = MATHS,\n           colour = GENDER)) +\n  geom_density()\n\n\n\n\n\n\n\n\n\n\n1.6.6 geom_boxplot\n\nggplot(data = exam_data,\n       aes(y = MATHS,\n           x = GENDER)) +\n  geom_boxplot()\n\n\n\n\n\n\n\n\n\nggplot(data = exam_data,\n       aes(y = MATHS,\n           x = GENDER)) +\n  geom_boxplot(notch = TRUE)\n\n\n\n\n\n\n\n\n\n\n1.6.7 geom_violin\n\nggplot(data = exam_data,\n       aes(y = MATHS,\n           x = GENDER)) +\n  geom_violin()\n\n\n\n\n\n\n\n\n\n\n1.6.8 geom_point - scatter plot\n\nggplot(data = exam_data,\n       aes(x = MATHS,\n           y = ENGLISH)) +\n  geom_point()\n\n\n\n\n\n\n\n\n\n\n1.6.9 Combining geom objects\n\nggplot(data = exam_data,\n       aes(y = MATHS,\n           x = GENDER)) +\n  geom_boxplot() +\n  geom_point(position = \"jitter\",\n             size = 0.5)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-stat",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-stat",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
+    "section": "1.7 Essential Elements: stat",
+    "text": "1.7 Essential Elements: stat\n\n1.7.1 stat_summary - add mean\n\nggplot(data = exam_data,\n       aes(y = MATHS,\n           x = GENDER)) +\n  geom_boxplot() +\n  stat_summary(geom = \"point\",\n               fun = \"mean\",\n               colour = \"red\",\n               size = 4)\n\n\n\n\n\n\n\n\n\n\n1.7.2 Using geom() method with stat\n\nggplot(data = exam_data,\n       aes(y = MATHS,\n           x = GENDER)) +\n  geom_boxplot() +\n  geom_point(stat = \"summary\",\n             fun = \"mean\",\n             colour = \"red\",\n             size = 4)\n\n\n\n\n\n\n\n\n\n\n1.7.3 Best fit curve with geom_smooth\n\nggplot(data = exam_data,\n       aes(x = MATHS,\n           y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-facets",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-facets",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
+    "section": "1.8 Essential Elements: Facets",
+    "text": "1.8 Essential Elements: Facets\n\n1.8.1 facet_wrap\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20) +\n  facet_wrap(~ CLASS)\n\n\n\n\n\n\n\n\n\n\n1.8.2 facet_grid\n\nggplot(data = exam_data,\n       aes(y = MATHS,\n           x = CLASS)) +\n  geom_boxplot() +\n  facet_grid(GENDER ~ .)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-coordinates",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-coordinates",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
+    "section": "1.9 Essential Elements: Coordinates",
+    "text": "1.9 Essential Elements: Coordinates\n\n1.9.1 Flip axes with coord_flip\n\nggplot(data = exam_data,\n       aes(x = RACE)) +\n  geom_bar() +\n  coord_flip()\n\n\n\n\n\n\n\n\n\n\n1.9.2 Change axis range with coord_cartesian\n\nggplot(data = exam_data,\n       aes(x = MATHS,\n           y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-themes",
+    "href": "Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html#essential-elements-themes",
+    "title": "Hands-on Exercise 1: A Layered Grammar of Graphics",
+    "section": "1.10 Essential Elements: Themes",
+    "text": "1.10 Essential Elements: Themes\n\n1.10.1 theme_gray (default)\n\nggplot(data = exam_data,\n       aes(x = RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_gray()"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "",
+    "text": "In this exercise we learn to create:\n\nInteractive visualisations using ggiraph and plotly\nAnimated visualisations using gganimate\nLinked views using crosstalk and DT"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#learning-outcome",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#learning-outcome",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "",
+    "text": "In this exercise we learn to create:\n\nInteractive visualisations using ggiraph and plotly\nAnimated visualisations using gganimate\nLinked views using crosstalk and DT"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#part-1-interactive-data-visualisation",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#part-1-interactive-data-visualisation",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "Part 1: Interactive Data Visualisation",
+    "text": "Part 1: Interactive Data Visualisation"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#getting-started",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#getting-started",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "3.2 Getting Started",
+    "text": "3.2 Getting Started\n\n3.2.1 Installing and Loading Packages\n\npacman::p_load(ggiraph, plotly,\n               patchwork, DT, tidyverse)\n\n\n\n3.2.2 Importing Data\n\nexam_data &lt;- read_csv(\"../../data/Exam_data.csv\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-visualisation---ggiraph-methods",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-visualisation---ggiraph-methods",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "3.3 Interactive Visualisation - ggiraph methods",
+    "text": "3.3 Interactive Visualisation - ggiraph methods\n\n3.3.1 Tooltip effect\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(tooltip = ID),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL,\n                     breaks = NULL)\n\ngirafe(\n  ggobj = p,\n  width_svg = 6,\n  height_svg = 6 * 0.618\n)\n\n\n\n\n\n\n\n3.3.2 Displaying multiple information on tooltip\n\nexam_data$tooltip &lt;- c(paste0(\n  \"Name = \", exam_data$ID,\n  \"\\n Class = \", exam_data$CLASS))\n\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(tooltip = exam_data$tooltip),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL,\n                     breaks = NULL)\n\ngirafe(\n  ggobj = p,\n  width_svg = 8,\n  height_svg = 8 * 0.618\n)\n\n\n\n\n\n\n\n3.3.3 Customising tooltip style\n\ntooltip_css &lt;- \"background-color:white;\nfont-style:bold; color:black;\"\n\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(tooltip = ID),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL,\n                     breaks = NULL)\n\ngirafe(\n  ggobj = p,\n  width_svg = 6,\n  height_svg = 6 * 0.618,\n  options = list(\n    opts_tooltip(css = tooltip_css))\n)\n\n\n\n\n\n\n\n3.3.4 Displaying statistics on tooltip\n\ntooltip &lt;- function(y, ymax, accuracy = .01) {\n  mean &lt;- scales::number(y, accuracy = accuracy)\n  sem  &lt;- scales::number(ymax - y, accuracy = accuracy)\n  paste(\"Mean maths scores:\", mean, \"+/-\", sem)\n}\n\n\ngg_point &lt;- ggplot(data = exam_data,\n                   aes(x = RACE)) +\n  stat_summary(aes(y = MATHS,\n                   tooltip = after_stat(\n                     tooltip(y, ymax))),\n               fun.data = \"mean_se\",\n               geom = GeomInteractiveCol,\n               fill = \"light blue\") +\n  stat_summary(aes(y = MATHS),\n               fun.data = mean_se,\n               geom = \"errorbar\",\n               width = 0.2,\n               size = 0.2)\n\ngirafe(ggobj = gg_point,\n       width_svg = 8,\n       height_svg = 8 * 0.618)\n\n\n\n\n\n\n\n3.3.5 Hover effect with data_id\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(data_id = CLASS),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL,\n                     breaks = NULL)\n\ngirafe(\n  ggobj = p,\n  width_svg = 6,\n  height_svg = 6 * 0.618\n)\n\n\n\n\n\n\n\n3.3.6 Styling hover effect\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(data_id = CLASS),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL,\n                     breaks = NULL)\n\ngirafe(\n  ggobj = p,\n  width_svg = 6,\n  height_svg = 6 * 0.618,\n  options = list(\n    opts_hover(css = \"fill: #202020;\"),\n    opts_hover_inv(css = \"opacity:0.2;\")\n  )\n)\n\n\n\n\n\n\n\n3.3.7 Combining tooltip and hover effect\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(tooltip = CLASS,\n        data_id = CLASS),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  scale_y_continuous(NULL,\n                     breaks = NULL)\n\ngirafe(\n  ggobj = p,\n  width_svg = 6,\n  height_svg = 6 * 0.618,\n  options = list(\n    opts_hover(css = \"fill: #202020;\"),\n    opts_hover_inv(css = \"opacity:0.2;\")\n  )\n)\n\n\n\n\n\n\n\n3.3.8 Coordinated multiple views with ggiraph\n\np1 &lt;- ggplot(data = exam_data,\n             aes(x = MATHS)) +\n  geom_dotplot_interactive(\n    aes(data_id = ID),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  scale_y_continuous(NULL,\n                     breaks = NULL)\n\np2 &lt;- ggplot(data = exam_data,\n             aes(x = ENGLISH)) +\n  geom_dotplot_interactive(\n    aes(data_id = ID),\n    stackgroups = TRUE,\n    binwidth = 1,\n    method = \"histodot\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  scale_y_continuous(NULL,\n                     breaks = NULL)\n\ngirafe(code = print(p1 + p2),\n       width_svg = 10,\n       height_svg = 5,\n       options = list(\n         opts_hover(css = \"fill: #202020;\"),\n         opts_hover_inv(css = \"opacity:0.2;\")\n       ))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-visualisation---plotly-methods",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-visualisation---plotly-methods",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "3.4 Interactive Visualisation - plotly methods",
+    "text": "3.4 Interactive Visualisation - plotly methods\n\n3.4.1 plot_ly() - basic scatter plot\n\nplot_ly(data = exam_data,\n        x = ~MATHS,\n        y = ~ENGLISH)\n\n\n\n\n\n\n\n3.4.2 plot_ly() - with visual variable (colour by Race)\n\nplot_ly(data = exam_data,\n        x = ~MATHS,\n        y = ~ENGLISH,\n        color = ~RACE)\n\n\n\n\n\n\n\n3.4.3 ggplotly() method\n\np &lt;- ggplot(data = exam_data,\n            aes(x = MATHS,\n                y = ENGLISH)) +\n  geom_point(dotsize = 1) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100))\n\nggplotly(p)\n\n\n\n\n\n\n\n3.4.4 Coordinated multiple views with plotly\n\nd &lt;- highlight_key(exam_data)\n\np1 &lt;- ggplot(data = d,\n             aes(x = MATHS,\n                 y = ENGLISH)) +\n  geom_point(size = 1) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100))\n\np2 &lt;- ggplot(data = d,\n             aes(x = MATHS,\n                 y = SCIENCE)) +\n  geom_point(size = 1) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100))\n\nsubplot(ggplotly(p1),\n        ggplotly(p2))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-data-table---dt-package",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#interactive-data-table---dt-package",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "3.5 Interactive Data Table - DT package",
+    "text": "3.5 Interactive Data Table - DT package\n\nDT::datatable(exam_data,\n              class = \"compact\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#linked-brushing---crosstalk-method",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#linked-brushing---crosstalk-method",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "3.6 Linked Brushing - crosstalk method",
+    "text": "3.6 Linked Brushing - crosstalk method\n\nd &lt;- highlight_key(exam_data)\n\np &lt;- ggplot(d,\n            aes(ENGLISH,\n                MATHS)) +\n  geom_point(size = 1) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100))\n\ngg &lt;- highlight(ggplotly(p),\n                \"plotly_selected\")\n\ncrosstalk::bscols(gg,\n                  DT::datatable(d),\n                  widths = 5)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#part-2-animated-data-visualisation",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#part-2-animated-data-visualisation",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "Part 2: Animated Data Visualisation",
+    "text": "Part 2: Animated Data Visualisation"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#getting-started-for-animation",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#getting-started-for-animation",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "3.7 Getting Started for Animation",
+    "text": "3.7 Getting Started for Animation\n\n3.7.1 Installing and Loading Packages\n\npacman::p_load(readxl, gganimate,\n               gifski, gapminder,\n               plotly, tidyverse)\n\n\n\n3.7.2 Importing Population Data\n\ncol &lt;- c(\"Country\", \"Continent\")\n\nglobalPop &lt;- read_xls(\"../../data/GlobalPopulation.xls\",\n                      sheet = \"Data\") %&gt;%\n  mutate(across(all_of(col), as.factor)) %&gt;%\n  mutate(Year = as.integer(Year))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#animated-visualisation-methods",
+    "href": "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html#animated-visualisation-methods",
+    "title": "Hands-on Exercise 3: Interactive and Animated Data Visualisation",
+    "section": "3.8 Animated Visualisation Methods",
+    "text": "3.8 Animated Visualisation Methods\n\n3.8.1 Static bubble plot\n\nggplot(globalPop,\n       aes(x = Old,\n           y = Young,\n           size = Population,\n           colour = Country)) +\n  geom_point(alpha = 0.7,\n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(title = \"Global Population: % Aged vs % Young\",\n       x = \"% Aged\",\n       y = \"% Young\")\n\n\n\n\n\n\n\n\n\n\n3.8.2 Animated bubble plot with gganimate\n\nggplot(globalPop,\n       aes(x = Old,\n           y = Young,\n           size = Population,\n           colour = Country)) +\n  geom_point(alpha = 0.7,\n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(title = \"Year: {frame_time}\",\n       x = \"% Aged\",\n       y = \"% Young\") +\n  transition_time(Year) +\n  ease_aes(\"linear\")\n\n\n\n\n\n\n\n\n\n\n3.8.3 Animated bubble plot with ggplotly\n\np &lt;- ggplot(globalPop,\n            aes(x = Old,\n                y = Young,\n                colour = Country)) +\n  geom_point(aes(size = Population,\n                 frame = Year),\n             alpha = 0.7,\n             show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  labs(x = \"% Aged\",\n       y = \"% Young\")\n\nggplotly(p)\n\n\n\n\n\n\n\n3.8.4 Animated bubble plot with plotly\n\nglobalPop %&gt;%\n  plot_ly(x = ~Old,\n          y = ~Young,\n          size = ~Population,\n          color = ~Continent,\n          frame = ~Year,\n          text = ~Country,\n          hoverinfo = \"text\",\n          type = \"scatter\",\n          mode = \"markers\") %&gt;%\n  layout(showlegend = TRUE,\n         xaxis = list(title = \"% Aged\"),\n         yaxis = list(title = \"% Young\"))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html",
+    "title": "Hands-on Exercise 4",
+    "section": "",
+    "text": "Funnel plots are designed for conducting unbiased comparison between outlets, stores or business entities. In this section we will learn to:\n\nPlot funnel plots using FunnelPlotR\nPlot static funnel plots using ggplot2\nPlot interactive funnel plots using plotly and ggplot2\n\n\n\n\n\npacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)\n\n\n\n\nThe dataset used is COVID-19_DKI_Jakarta.csv, containing cumulative COVID-19 cases and deaths by sub-district as at 31 July 2021.\n\ncovid19 &lt;- read_csv(\"../../data/COVID-19_DKI_Jakarta.csv\") %&gt;%\n  mutate_if(is.character, as.factor)\n\n\nkable(head(covid19), format = \"html\")\n\n\n\n\nSub-district ID\nCity\nDistrict\nSub-district\nPositive\nRecovered\nDeath\n\n\n\n\n3172051003\nJAKARTA UTARA\nPADEMANGAN\nANCOL\n1776\n1691\n26\n\n\n3173041007\nJAKARTA BARAT\nTAMBORA\nANGKE\n1783\n1720\n29\n\n\n3175041005\nJAKARTA TIMUR\nKRAMAT JATI\nBALE KAMBANG\n2049\n1964\n31\n\n\n3175031003\nJAKARTA TIMUR\nJATINEGARA\nBALI MESTER\n827\n797\n13\n\n\n3175101006\nJAKARTA TIMUR\nCIPAYUNG\nBAMBU APUS\n2866\n2792\n27\n\n\n3174031002\nJAKARTA SELATAN\nMAMPANG PRAPATAN\nBANGKA\n1828\n1757\n26\n\n\n\n\n\n\n\n\n\n\n\nfunnel_plot(\n  .data = covid19,\n  numerator = Positive,\n  denominator = Death,\n  group = `Sub-district`\n)\n\n\n\n\n\n\n\n\nA funnel plot object with 267 points of which 0 are outliers. \nPlot is adjusted for overdispersion. \n\n\n\n\n\n\nfunnel_plot(\n  .data = covid19,\n  numerator = Death,\n  denominator = Positive,\n  group = `Sub-district`,\n  data_type = \"PR\",\n  xrange = c(0, 6500),\n  yrange = c(0, 0.05)\n)\n\n\n\n\n\n\n\n\nA funnel plot object with 267 points of which 7 are outliers. \nPlot is adjusted for overdispersion. \n\n\n\n\n\n\nfunnel_plot(\n  .data = covid19,\n  numerator = Death,\n  denominator = Positive,\n  group = `Sub-district`,\n  data_type = \"PR\",\n  xrange = c(0, 6500),\n  yrange = c(0, 0.05),\n  label = NA,\n  title = \"Cumulative COVID-19 Fatality Rate by Cumulative Total Number of COVID-19 Positive Cases\",\n  x_label = \"Cumulative COVID-19 Positive Cases\",\n  y_label = \"Cumulative Fatality Rate\"\n)\n\n\n\n\n\n\n\n\nA funnel plot object with 267 points of which 7 are outliers. \nPlot is adjusted for overdispersion. \n\n\n\n\n\n\n\n\n\ndf &lt;- covid19 %&gt;%\n  mutate(rate = Death / Positive) %&gt;%\n  mutate(rate.se = sqrt((rate * (1 - rate)) / Positive)) %&gt;%\n  filter(rate &gt; 0)\n\nfit.mean &lt;- weighted.mean(df$rate, 1 / df$rate.se^2)\n\n\n\n\n\nnumber.seq &lt;- seq(1, max(df$Positive), 1)\nnumber.ll95 &lt;- fit.mean - 1.96 * sqrt((fit.mean * (1 - fit.mean)) / number.seq)\nnumber.ul95 &lt;- fit.mean + 1.96 * sqrt((fit.mean * (1 - fit.mean)) / number.seq)\nnumber.ll999 &lt;- fit.mean - 3.29 * sqrt((fit.mean * (1 - fit.mean)) / number.seq)\nnumber.ul999 &lt;- fit.mean + 3.29 * sqrt((fit.mean * (1 - fit.mean)) / number.seq)\n\ndfCI &lt;- data.frame(\n  number.seq, number.ll95, number.ul95,\n  number.ll999, number.ul999, fit.mean\n)\n\n\n\n\n\np &lt;- ggplot(df, aes(x = Positive, y = rate)) +\n  geom_point(aes(label = `Sub-district`),\n             alpha = 0.4,\n             size = 0.9) +\n  geom_line(data = dfCI,\n            aes(x = number.seq, y = number.ll95),\n            linewidth = 0.4,\n            colour = \"grey40\",\n            linetype = \"dashed\") +\n  geom_line(data = dfCI,\n            aes(x = number.seq, y = number.ul95),\n            linewidth = 0.4,\n            colour = \"grey40\",\n            linetype = \"dashed\") +\n  geom_line(data = dfCI,\n            aes(x = number.seq, y = number.ll999),\n            linewidth = 0.4,\n            colour = \"grey40\") +\n  geom_line(data = dfCI,\n            aes(x = number.seq, y = number.ul999),\n            linewidth = 0.4,\n            colour = \"grey40\") +\n  geom_hline(data = dfCI,\n             aes(yintercept = fit.mean),\n             linewidth = 0.4,\n             colour = \"grey40\") +\n  coord_cartesian(ylim = c(0, 0.05)) +\n  annotate(\"text\", x = 1, y = -0.13, label = \"95%\", size = 3, colour = \"grey40\") +\n  annotate(\"text\", x = 4.5, y = -0.18, label = \"99%\", size = 3, colour = \"grey40\") +\n  ggtitle(\"Cumulative Fatality Rate by Cumulative Number of COVID-19 Cases\") +\n  xlab(\"Cumulative Number of COVID-19 Cases\") +\n  ylab(\"Cumulative Fatality Rate\") +\n  theme_light() +\n  theme(plot.title = element_text(size = 12),\n        legend.position = c(0.91, 0.85),\n        legend.title = element_text(size = 7),\n        legend.text = element_text(size = 7),\n        legend.background = element_rect(colour = \"white\"),\n        legend.key = element_blank())\n\np\n\n\n\n\n\n\n\n\n\n\n\n\nggplotly(p, tooltip = c(\"label\", \"x\", \"y\"))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#overview",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#overview",
+    "title": "Hands-on Exercise 4",
+    "section": "",
+    "text": "Funnel plots are designed for conducting unbiased comparison between outlets, stores or business entities. In this section we will learn to:\n\nPlot funnel plots using FunnelPlotR\nPlot static funnel plots using ggplot2\nPlot interactive funnel plots using plotly and ggplot2"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#installing-and-loading-r-packages",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#installing-and-loading-r-packages",
+    "title": "Hands-on Exercise 4",
+    "section": "",
+    "text": "pacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#importing-data",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#importing-data",
+    "title": "Hands-on Exercise 4",
+    "section": "",
+    "text": "The dataset used is COVID-19_DKI_Jakarta.csv, containing cumulative COVID-19 cases and deaths by sub-district as at 31 July 2021.\n\ncovid19 &lt;- read_csv(\"../../data/COVID-19_DKI_Jakarta.csv\") %&gt;%\n  mutate_if(is.character, as.factor)\n\n\nkable(head(covid19), format = \"html\")\n\n\n\n\nSub-district ID\nCity\nDistrict\nSub-district\nPositive\nRecovered\nDeath\n\n\n\n\n3172051003\nJAKARTA UTARA\nPADEMANGAN\nANCOL\n1776\n1691\n26\n\n\n3173041007\nJAKARTA BARAT\nTAMBORA\nANGKE\n1783\n1720\n29\n\n\n3175041005\nJAKARTA TIMUR\nKRAMAT JATI\nBALE KAMBANG\n2049\n1964\n31\n\n\n3175031003\nJAKARTA TIMUR\nJATINEGARA\nBALI MESTER\n827\n797\n13\n\n\n3175101006\nJAKARTA TIMUR\nCIPAYUNG\nBAMBU APUS\n2866\n2792\n27\n\n\n3174031002\nJAKARTA SELATAN\nMAMPANG PRAPATAN\nBANGKA\n1828\n1757\n26"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#funnelplotr-methods",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#funnelplotr-methods",
+    "title": "Hands-on Exercise 4",
+    "section": "",
+    "text": "funnel_plot(\n  .data = covid19,\n  numerator = Positive,\n  denominator = Death,\n  group = `Sub-district`\n)\n\n\n\n\n\n\n\n\nA funnel plot object with 267 points of which 0 are outliers. \nPlot is adjusted for overdispersion. \n\n\n\n\n\n\nfunnel_plot(\n  .data = covid19,\n  numerator = Death,\n  denominator = Positive,\n  group = `Sub-district`,\n  data_type = \"PR\",\n  xrange = c(0, 6500),\n  yrange = c(0, 0.05)\n)\n\n\n\n\n\n\n\n\nA funnel plot object with 267 points of which 7 are outliers. \nPlot is adjusted for overdispersion. \n\n\n\n\n\n\nfunnel_plot(\n  .data = covid19,\n  numerator = Death,\n  denominator = Positive,\n  group = `Sub-district`,\n  data_type = \"PR\",\n  xrange = c(0, 6500),\n  yrange = c(0, 0.05),\n  label = NA,\n  title = \"Cumulative COVID-19 Fatality Rate by Cumulative Total Number of COVID-19 Positive Cases\",\n  x_label = \"Cumulative COVID-19 Positive Cases\",\n  y_label = \"Cumulative Fatality Rate\"\n)\n\n\n\n\n\n\n\n\nA funnel plot object with 267 points of which 7 are outliers. \nPlot is adjusted for overdispersion."
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#funnel-plot-with-ggplot2",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#funnel-plot-with-ggplot2",
+    "title": "Hands-on Exercise 4",
+    "section": "",
+    "text": "df &lt;- covid19 %&gt;%\n  mutate(rate = Death / Positive) %&gt;%\n  mutate(rate.se = sqrt((rate * (1 - rate)) / Positive)) %&gt;%\n  filter(rate &gt; 0)\n\nfit.mean &lt;- weighted.mean(df$rate, 1 / df$rate.se^2)\n\n\n\n\n\nnumber.seq &lt;- seq(1, max(df$Positive), 1)\nnumber.ll95 &lt;- fit.mean - 1.96 * sqrt((fit.mean * (1 - fit.mean)) / number.seq)\nnumber.ul95 &lt;- fit.mean + 1.96 * sqrt((fit.mean * (1 - fit.mean)) / number.seq)\nnumber.ll999 &lt;- fit.mean - 3.29 * sqrt((fit.mean * (1 - fit.mean)) / number.seq)\nnumber.ul999 &lt;- fit.mean + 3.29 * sqrt((fit.mean * (1 - fit.mean)) / number.seq)\n\ndfCI &lt;- data.frame(\n  number.seq, number.ll95, number.ul95,\n  number.ll999, number.ul999, fit.mean\n)\n\n\n\n\n\np &lt;- ggplot(df, aes(x = Positive, y = rate)) +\n  geom_point(aes(label = `Sub-district`),\n             alpha = 0.4,\n             size = 0.9) +\n  geom_line(data = dfCI,\n            aes(x = number.seq, y = number.ll95),\n            linewidth = 0.4,\n            colour = \"grey40\",\n            linetype = \"dashed\") +\n  geom_line(data = dfCI,\n            aes(x = number.seq, y = number.ul95),\n            linewidth = 0.4,\n            colour = \"grey40\",\n            linetype = \"dashed\") +\n  geom_line(data = dfCI,\n            aes(x = number.seq, y = number.ll999),\n            linewidth = 0.4,\n            colour = \"grey40\") +\n  geom_line(data = dfCI,\n            aes(x = number.seq, y = number.ul999),\n            linewidth = 0.4,\n            colour = \"grey40\") +\n  geom_hline(data = dfCI,\n             aes(yintercept = fit.mean),\n             linewidth = 0.4,\n             colour = \"grey40\") +\n  coord_cartesian(ylim = c(0, 0.05)) +\n  annotate(\"text\", x = 1, y = -0.13, label = \"95%\", size = 3, colour = \"grey40\") +\n  annotate(\"text\", x = 4.5, y = -0.18, label = \"99%\", size = 3, colour = \"grey40\") +\n  ggtitle(\"Cumulative Fatality Rate by Cumulative Number of COVID-19 Cases\") +\n  xlab(\"Cumulative Number of COVID-19 Cases\") +\n  ylab(\"Cumulative Fatality Rate\") +\n  theme_light() +\n  theme(plot.title = element_text(size = 12),\n        legend.position = c(0.91, 0.85),\n        legend.title = element_text(size = 7),\n        legend.text = element_text(size = 7),\n        legend.background = element_rect(colour = \"white\"),\n        legend.key = element_blank())\n\np\n\n\n\n\n\n\n\n\n\n\n\n\nggplotly(p, tooltip = c(\"label\", \"x\", \"y\"))"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#learning-outcome",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#learning-outcome",
+    "title": "Hands-on Exercise 4",
+    "section": "9.1 Learning Outcome",
+    "text": "9.1 Learning Outcome\nIn this section, we explore two relatively new statistical graphic methods:\n\nRidgeline plots using ggridges\nRaincloud plots using ggdist"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#getting-started",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#getting-started",
+    "title": "Hands-on Exercise 4",
+    "section": "9.2 Getting Started",
+    "text": "9.2 Getting Started\n\n9.2.1 Installing and Loading Packages\n\npacman::p_load(ggdist, ggridges, ggthemes,\n               colorspace, tidyverse)\n\n\n\n9.2.2 Importing Data\n\nexam &lt;- read_csv(\"../../data/Exam_data.csv\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#ridgeline-plot",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#ridgeline-plot",
+    "title": "Hands-on Exercise 4",
+    "section": "9.3 Ridgeline Plot",
+    "text": "9.3 Ridgeline Plot\n\n9.3.1 Basic Ridgeline Plot using geom_density_ridges()\n\nggplot(exam,\n       aes(x = ENGLISH,\n           y = CLASS)) +\n  geom_density_ridges(\n    scale = 3,\n    rel_min_height = 0.01,\n    bandwidth = 3.4,\n    fill = lighten(\"#7097BB\", .3),\n    color = \"white\"\n  ) +\n  scale_x_continuous(name = \"English grades\",\n                     expand = c(0, 0)) +\n  scale_y_discrete(name = NULL,\n                   expand = expansion(add = c(0.2, 2.6))) +\n  theme_ridges()\n\n\n\n\n\n\n\n\n\n\n9.3.2 Varying Fill Colours Along the x-axis\n\nggplot(exam,\n       aes(x = ENGLISH,\n           y = CLASS,\n           fill = stat(x))) +\n  geom_density_ridges_gradient(\n    scale = 3,\n    rel_min_height = 0.01) +\n  scale_fill_viridis_c(name = \"Temp. [F]\",\n                       option = \"C\") +\n  scale_x_continuous(name = \"English grades\",\n                     expand = c(0, 0)) +\n  scale_y_discrete(name = NULL,\n                   expand = expansion(add = c(0.2, 2.6))) +\n  theme_ridges()\n\n\n\n\n\n\n\n\n\n\n9.3.3 Mapping Probabilities onto Colour using stat_density_ridges()\n\nggplot(exam,\n       aes(x = ENGLISH,\n           y = CLASS,\n           fill = 0.5 - abs(0.5 - stat(ecdf)))) +\n  stat_density_ridges(geom = \"density_ridges_gradient\",\n                      calc_ecdf = TRUE) +\n  scale_fill_viridis_c(name = \"Tail probability\",\n                       direction = -1) +\n  theme_ridges()\n\n\n\n\n\n\n\n\n\n\n9.3.4 Ridgeline Plot with Quantile Lines\n\nggplot(exam,\n       aes(x = ENGLISH,\n           y = CLASS,\n           fill = factor(stat(quantile)))) +\n  stat_density_ridges(\n    geom = \"density_ridges_gradient\",\n    calc_ecdf = TRUE,\n    quantiles = 4,\n    quantile_lines = TRUE) +\n  scale_fill_viridis_d(name = \"Quartiles\") +\n  theme_ridges()"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#raincloud-plot",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#raincloud-plot",
+    "title": "Hands-on Exercise 4",
+    "section": "9.4 Raincloud Plot",
+    "text": "9.4 Raincloud Plot\n\n9.4.1 Half Eye Graph\n\nggplot(exam,\n       aes(x = RACE,\n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA)\n\n\n\n\n\n\n\n\n\n\n9.4.2 Adding Boxplot\n\nggplot(exam,\n       aes(x = RACE,\n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA) +\n  geom_boxplot(width = 0.20,\n               outlier.shape = NA)\n\n\n\n\n\n\n\n\n\n\n9.4.3 Adding Dot Plots with stat_dots()\n\nggplot(exam,\n       aes(x = RACE,\n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA) +\n  geom_boxplot(width = 0.20,\n               outlier.shape = NA) +\n  stat_dots(side = \"left\",\n            justification = 1.2,\n            binwidth = 0.5,\n            dotsize = 2)\n\n\n\n\n\n\n\n\n\n\n9.4.4 Finishing Touch\n\nggplot(exam,\n       aes(x = RACE,\n           y = ENGLISH)) +\n  stat_halfeye(adjust = 0.5,\n               justification = -0.2,\n               .width = 0,\n               point_colour = NA) +\n  geom_boxplot(width = 0.20,\n               outlier.shape = NA) +\n  stat_dots(side = \"left\",\n            justification = 1.2,\n            binwidth = 0.5,\n            dotsize = 1.5) +\n  coord_flip() +\n  theme_economist()"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#learning-outcome-1",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#learning-outcome-1",
+    "title": "Hands-on Exercise 4",
+    "section": "10.1 Learning Outcome",
+    "text": "10.1 Learning Outcome\nIn this section we use ggstatsplot to create visual graphics with rich statistical information embedded directly in the plot."
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#getting-started-1",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#getting-started-1",
+    "title": "Hands-on Exercise 4",
+    "section": "10.2 Getting Started",
+    "text": "10.2 Getting Started\n\n10.2.1 Installing and Loading Packages\n\npacman::p_load(ggstatsplot, tidyverse)\n\n\n\n10.2.2 Importing Data\n\nexam &lt;- read_csv(\"../../data/Exam_data.csv\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#one-sample-test-gghistostats",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#one-sample-test-gghistostats",
+    "title": "Hands-on Exercise 4",
+    "section": "10.3 One-Sample Test: gghistostats()",
+    "text": "10.3 One-Sample Test: gghistostats()\n\nset.seed(1234)\n\nggstatsplot::gghistostats(\n  data = exam,\n  x = ENGLISH,\n  type = \"bayes\",\n  test.value = 60,\n  xlab = \"English scores\"\n)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#two-sample-mean-test-ggbetweenstats",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#two-sample-mean-test-ggbetweenstats",
+    "title": "Hands-on Exercise 4",
+    "section": "10.4 Two-Sample Mean Test: ggbetweenstats()",
+    "text": "10.4 Two-Sample Mean Test: ggbetweenstats()\n\nggstatsplot::ggbetweenstats(\n  data = exam,\n  x = GENDER,\n  y = MATHS,\n  type = \"np\",\n  messages = FALSE\n)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#one-way-anova-test-ggbetweenstats",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#one-way-anova-test-ggbetweenstats",
+    "title": "Hands-on Exercise 4",
+    "section": "10.5 One-way ANOVA Test: ggbetweenstats()",
+    "text": "10.5 One-way ANOVA Test: ggbetweenstats()\n\nggstatsplot::ggbetweenstats(\n  data = exam,\n  x = RACE,\n  y = ENGLISH,\n  type = \"p\",\n  mean.ci = TRUE,\n  pairwise.comparisons = TRUE,\n  pairwise.display = \"s\",\n  p.adjust.method = \"fdr\",\n  messages = FALSE\n)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#significant-test-of-correlation-ggscatterstats",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#significant-test-of-correlation-ggscatterstats",
+    "title": "Hands-on Exercise 4",
+    "section": "10.6 Significant Test of Correlation: ggscatterstats()",
+    "text": "10.6 Significant Test of Correlation: ggscatterstats()\n\nggstatsplot::ggscatterstats(\n  data = exam,\n  x = MATHS,\n  y = ENGLISH,\n  marginal = FALSE\n)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#significant-test-of-association-ggbarstats",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#significant-test-of-association-ggbarstats",
+    "title": "Hands-on Exercise 4",
+    "section": "10.7 Significant Test of Association: ggbarstats()",
+    "text": "10.7 Significant Test of Association: ggbarstats()\n\nexam1 &lt;- exam %&gt;%\n  mutate(MATHS_bins =\n           cut(MATHS,\n               breaks = c(0, 60, 75, 85, 100)))\n\nggstatsplot::ggbarstats(exam1,\n                        x = MATHS_bins,\n                        y = GENDER)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#learning-outcome-2",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#learning-outcome-2",
+    "title": "Hands-on Exercise 4",
+    "section": "11.1 Learning Outcome",
+    "text": "11.1 Learning Outcome\nIn this section we will learn to:\n\nPlot error bars using ggplot2\nPlot interactive error bars combining ggplot2, plotly and DT\nCreate advanced uncertainty visualisations using ggdist\nCreate Hypothetical Outcome Plots (HOPs) using ungeviz"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#getting-started-2",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#getting-started-2",
+    "title": "Hands-on Exercise 4",
+    "section": "11.2 Getting Started",
+    "text": "11.2 Getting Started\n\n11.2.1 Installing and Loading Packages\n\npacman::p_load(plotly, crosstalk, DT,\n               ggdist, ggridges, colorspace,\n               gganimate, tidyverse)\n\n\n\n11.2.2 Importing Data\n\nexam &lt;- read_csv(\"../../data/Exam_data.csv\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#visualising-uncertainty-of-point-estimates-ggplot2",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#visualising-uncertainty-of-point-estimates-ggplot2",
+    "title": "Hands-on Exercise 4",
+    "section": "11.3 Visualising Uncertainty of Point Estimates: ggplot2",
+    "text": "11.3 Visualising Uncertainty of Point Estimates: ggplot2\n\n11.3.1 Deriving Summary Statistics\n\nmy_sum &lt;- exam %&gt;%\n  group_by(RACE) %&gt;%\n  summarise(\n    n = n(),\n    mean = mean(MATHS),\n    sd = sd(MATHS),\n    .groups = \"drop\"\n  ) %&gt;%\n  mutate(se = sd / sqrt(n - 1))\n\nknitr::kable(head(my_sum), format = \"html\")\n\n\n\n\nRACE\nn\nmean\nsd\nse\n\n\n\n\nChinese\n193\n76.50777\n15.69040\n1.132357\n\n\nIndian\n12\n60.66667\n23.35237\n7.041005\n\n\nMalay\n108\n57.44444\n21.13478\n2.043177\n\n\nOthers\n9\n69.66667\n10.72381\n3.791438\n\n\n\n\n\n\n\n11.3.2 Plotting Standard Error Bars\n\nggplot(my_sum) +\n  geom_errorbar(\n    aes(x = RACE,\n        ymin = mean - se,\n        ymax = mean + se),\n    width = 0.2,\n    colour = \"black\",\n    alpha = 0.9,\n    linewidth = 0.5) +\n  geom_point(aes(x = RACE,\n                 y = mean),\n             stat = \"identity\",\n             color = \"red\",\n             size = 1.5,\n             alpha = 1) +\n  ggtitle(\"Standard error of mean maths score by race\")\n\n\n\n\n\n\n\n\n\n\n11.3.3 Plotting 95% Confidence Interval\n\nggplot(my_sum) +\n  geom_errorbar(\n    aes(x = reorder(RACE, -mean),\n        ymin = mean - 1.96 * se,\n        ymax = mean + 1.96 * se),\n    width = 0.2,\n    colour = \"black\",\n    alpha = 0.9,\n    linewidth = 0.5) +\n  geom_point(aes(x = RACE,\n                 y = mean),\n             stat = \"identity\",\n             color = \"red\",\n             size = 1.5,\n             alpha = 1) +\n  labs(x = \"Maths score\",\n       title = \"95% confidence interval of mean maths score by race\")\n\n\n\n\n\n\n\n\n\n\n11.3.4 Interactive Error Bars\n\nshared_df &lt;- SharedData$new(my_sum)\n\nbscols(\n  widths = c(4, 8),\n  ggplotly(\n    ggplot(shared_df) +\n      geom_errorbar(\n        aes(x = reorder(RACE, -mean),\n            ymin = mean - 2.58 * se,\n            ymax = mean + 2.58 * se),\n        width = 0.2,\n        colour = \"black\",\n        alpha = 0.9,\n        size = 0.5) +\n      geom_point(\n        aes(x = RACE,\n            y = mean,\n            text = paste(\"Race:\", RACE,\n                         \"&lt;br&gt;N:\", n,\n                         \"&lt;br&gt;Avg. Scores:\", round(mean, digits = 2),\n                         \"&lt;br&gt;99% CI:[\",\n                         round(mean - 2.58 * se, digits = 2), \",\",\n                         round(mean + 2.58 * se, digits = 2), \"]\")),\n        stat = \"identity\",\n        color = \"red\",\n        size = 1.5,\n        alpha = 1) +\n      xlab(\"Race\") +\n      ylab(\"Average Scores\") +\n      theme_minimal() +\n      theme(axis.text.x = element_text(angle = 45,\n                                       vjust = 0.5,\n                                       hjust = 1)) +\n      ggtitle(\"99% Confidence interval of average maths scores by race\"),\n    tooltip = \"text\"\n  ),\n  DT::datatable(shared_df,\n                rownames = FALSE,\n                class = \"compact\",\n                width = \"100%\",\n                options = list(pageLength = 10,\n                               scrollX = TRUE),\n                colnames = c(\"No. of pupils\",\n                             \"Avg Scores\",\n                             \"Std Dev\",\n                             \"Std Error\")) %&gt;%\n    formatRound(columns = c(\"mean\", \"sd\", \"se\"),\n                digits = 2)\n)"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#visualising-uncertainty-ggdist-methods",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#visualising-uncertainty-ggdist-methods",
+    "title": "Hands-on Exercise 4",
+    "section": "11.4 Visualising Uncertainty: ggdist Methods",
+    "text": "11.4 Visualising Uncertainty: ggdist Methods\n\n11.4.1 stat_pointinterval()\n\nexam %&gt;%\n  ggplot(aes(x = RACE,\n             y = MATHS)) +\n  stat_pointinterval() +\n  labs(\n    title = \"Visualising confidence intervals of mean math score\",\n    subtitle = \"Mean Point + Multiple-interval plot\")\n\n\n\n\n\n\n\n\n\n\n11.4.2 Customising stat_pointinterval()\n\nexam %&gt;%\n  ggplot(aes(x = RACE,\n             y = MATHS)) +\n  stat_pointinterval(.width = 0.95,\n                     .point = median,\n                     .interval = qi) +\n  labs(\n    title = \"Visualising confidence intervals of median math score\",\n    subtitle = \"Median Point + qi interval\")\n\n\n\n\n\n\n\n\n\n\n11.4.3 stat_gradientinterval()\n\nexam %&gt;%\n  ggplot(aes(x = RACE,\n             y = MATHS)) +\n  stat_gradientinterval(\n    fill = \"skyblue\",\n    show.legend = TRUE\n  ) +\n  labs(\n    title = \"Visualising confidence intervals of mean math score\",\n    subtitle = \"Gradient + interval plot\")"
+  },
+  {
+    "objectID": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#hypothetical-outcome-plots-hops",
+    "href": "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html#hypothetical-outcome-plots-hops",
+    "title": "Hands-on Exercise 4",
+    "section": "11.5 Hypothetical Outcome Plots (HOPs)",
+    "text": "11.5 Hypothetical Outcome Plots (HOPs)\n\n11.5.1 Installing ungeviz\n\ndevtools::install_github(\"wilkelab/ungeviz\")\n\n\n\n11.5.2 HOPs Plot\n\nif (requireNamespace(\"ungeviz\", quietly = TRUE)) {\n  library(ungeviz)\n\n  ggplot(data = exam,\n         aes(x = factor(RACE),\n             y = MATHS)) +\n    geom_point(position = position_jitter(height = 0.3,\n                                          width = 0.05),\n               size = 0.4,\n               color = \"#0072B2\",\n               alpha = 1 / 2) +\n    geom_hpline(data = sampler(25,\n                               group = RACE),\n                height = 0.6,\n                color = \"#D55E00\") +\n    theme_bw() +\n    transition_states(.draw, 1, 3)\n} else {\n  cat(\"`ungeviz` is not installed. Run `devtools::install_github(\\\"wilkelab/ungeviz\\\")` to render the HOPs example.\")\n}\n\n`ungeviz` is not installed. Run `devtools::install_github(\"wilkelab/ungeviz\")` to render the HOPs example."
   },
   {
     "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html",
     "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html",
     "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
     "section": "",
-    "text": "pacman::p_load(ggrepel, patchwork, ggthemes, hrbrthemes, tidyverse)\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages"
+    "text": "In this exercise we explore ggplot2 extensions for more elegant and effective statistical graphics:\n\nggrepel for non-overlapping text annotations\nggthemes and hrbrthemes for professional themes\npatchwork for combining multiple plots"
   },
   {
-    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#loading-r-packages",
-    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#loading-r-packages",
+    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#overview",
+    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#overview",
     "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
     "section": "",
-    "text": "pacman::p_load(ggrepel, patchwork, ggthemes, hrbrthemes, tidyverse)\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages\n\n\n\nThe downloaded binary packages are in\n    /var/folders/m5/kn_jyswx42q_1l4j3c7fpq3h0000gn/T//RtmpjxorOA/downloaded_packages"
+    "text": "In this exercise we explore ggplot2 extensions for more elegant and effective statistical graphics:\n\nggrepel for non-overlapping text annotations\nggthemes and hrbrthemes for professional themes\npatchwork for combining multiple plots"
   },
   {
-    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#importing-data",
-    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#importing-data",
+    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#getting-started",
+    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#getting-started",
     "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
-    "section": "Importing Data",
-    "text": "Importing Data\n\nexam_data &lt;- read_csv(\"../../data/Exam_data.csv\")"
+    "section": "2.2 Getting Started",
+    "text": "2.2 Getting Started\n\n2.2.1 Installing and Loading Packages\n\npacman::p_load(ggrepel, patchwork,\n               ggthemes, hrbrthemes,\n               tidyverse)\n\n\n\n2.2.2 Importing Data\n\nexam_data &lt;- read_csv(\"../../data/Exam_data.csv\")"
   },
   {
     "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-ggplot2-annotation-ggrepel",
     "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-ggplot2-annotation-ggrepel",
     "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
-    "section": "Beyond ggplot2 Annotation: ggrepel",
-    "text": "Beyond ggplot2 Annotation: ggrepel\nReplacing geom_text() with geom_text_repel() to avoid overlapping labels.\n\nggplot(data = exam_data,\n       aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  geom_label_repel(aes(label = ID),\n                   fontface = \"bold\") +\n  theme_bw() +\n  labs(title = \"English scores versus Maths scores for Primary 3\")"
+    "section": "2.3 Beyond ggplot2 Annotation: ggrepel",
+    "text": "2.3 Beyond ggplot2 Annotation: ggrepel\n\n2.3.1 Problem - overlapping labels with geom_label\n\nggplot(data = exam_data,\n       aes(x = MATHS,\n           y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  geom_label(aes(label = ID),\n             hjust = .5,\n             vjust = -.5) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100)) +\n  ggtitle(\"English scores versus Maths scores for Primary 3\")\n\n\n\n\n\n\n\n\n\n\n2.3.2 Solution - geom_label_repel\n\nggplot(data = exam_data,\n       aes(x = MATHS,\n           y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  geom_label_repel(aes(label = ID),\n                   fontface = \"bold\") +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100)) +\n  ggtitle(\"English scores versus Maths scores for Primary 3\")"
   },
   {
     "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-ggplot2-themes",
     "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-ggplot2-themes",
     "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
-    "section": "Beyond ggplot2 Themes",
-    "text": "Beyond ggplot2 Themes\nUsing theme_economist() from ggthemes.\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  theme_economist() +\n  labs(title = \"Distribution of Maths Scores\",\n       x = \"Maths Score\",\n       y = \"Frequency\")"
+    "section": "2.4 Beyond ggplot2 Themes",
+    "text": "2.4 Beyond ggplot2 Themes\n\n2.4.1 Default theme_gray\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  theme_gray() +\n  ggtitle(\"Distribution of Maths scores\")\n\n\n\n\n\n\n\n\n\n\n2.4.2 Working with ggthemes - The Economist theme\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_economist()\n\n\n\n\n\n\n\n\n\n\n2.4.3 Working with hrbrthemes\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_ipsum()\n\n\n\n\n\n\n\n\n\n\n2.4.4 hrbrthemes with axis and grid customisation\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  ggtitle(\"Distribution of Maths scores\") +\n  theme_ipsum(axis_title_size = 18,\n              base_size = 15,\n              grid = \"Y\")"
   },
   {
-    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#composite-plots-with-patchwork",
-    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#composite-plots-with-patchwork",
+    "objectID": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-single-graph-patchwork",
+    "href": "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html#beyond-single-graph-patchwork",
     "title": "Hands-on Exercise 2: Beyond ggplot2 Fundamentals",
-    "section": "Composite Plots with patchwork",
-    "text": "Composite Plots with patchwork\nCombining multiple plots into one figure.\n\np1 &lt;- ggplot(data = exam_data,\n             aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  labs(title = \"Distribution of Maths Scores\")\n\np2 &lt;- ggplot(data = exam_data,\n             aes(x = ENGLISH)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  labs(title = \"Distribution of English Scores\")\n\np3 &lt;- ggplot(data = exam_data,\n             aes(x = MATHS, y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100)) +\n  labs(title = \"English vs Maths Scores\")\n\n(p1 / p2) | p3"
+    "section": "2.5 Beyond Single Graph: patchwork",
+    "text": "2.5 Beyond Single Graph: patchwork\n\n2.5.1 Create individual plots\n\np1 &lt;- ggplot(data = exam_data,\n             aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  ggtitle(\"Distribution of Maths scores\")\n\np2 &lt;- ggplot(data = exam_data,\n             aes(x = ENGLISH)) +\n  geom_histogram(bins = 20,\n                 boundary = 100,\n                 color = \"grey25\",\n                 fill = \"grey90\") +\n  coord_cartesian(xlim = c(0, 100)) +\n  ggtitle(\"Distribution of English scores\")\n\np3 &lt;- ggplot(data = exam_data,\n             aes(x = MATHS,\n                 y = ENGLISH)) +\n  geom_point() +\n  geom_smooth(method = lm,\n              linewidth = 0.5) +\n  coord_cartesian(xlim = c(0, 100),\n                  ylim = c(0, 100)) +\n  ggtitle(\"English vs Maths scores\")\n\n\n\n2.5.2 Combining two plots side by side\n\np1 + p2\n\n\n\n\n\n\n\n\n\n\n2.5.3 Combining three plots\n\n(p1 / p2) | p3\n\n\n\n\n\n\n\n\n\n\n2.5.4 Creating composite figure with tag\n\n((p1 / p2) | p3) +\n  plot_annotation(tag_levels = \"I\")\n\n\n\n\n\n\n\n\n\n\n2.5.5 Creating figure with inset\n\np3 + inset_element(p2,\n                   left = 0.02,\n                   bottom = 0.7,\n                   right = 0.5,\n                   top = 1)\n\n\n\n\n\n\n\n\n\n\n2.5.6 Composite figure with patchwork and ggtheme\n\npatchwork &lt;- (p1 / p2) | p3\npatchwork & theme_economist()"
   },
   {
     "objectID": "index.html",

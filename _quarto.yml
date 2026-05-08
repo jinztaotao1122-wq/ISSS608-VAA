@@ -14,6 +14,8 @@ website:
             href: "Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html"
           - text: "Hands-on Exercise 3"
             href: "Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html"
+          - text: "Hands-on Exercise 4"
+            href: "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html"
     right:
       - href: index.qmd
         text: Home
@@ -27,4 +29,3 @@ format:
     toc: true
 
 editor: visual
-
