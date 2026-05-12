@@ -1,0 +1,410 @@
+---
+title: "Hands-on Exercise 5"
+author: "Jin Zhang"
+date: "12 May 2026"
+date-modified: "last-modified"
+execute:
+  echo: true
+  eval: true
+  warning: false
+  message: false
+  freeze: false
+format:
+  html:
+    toc: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(fig.align = "center")
+```
+
+# Lesson 5: Visual Multivariate Analysis
+
+This hands-on exercise consolidates the practical work from [Lesson 5: Visual Multivariate Analysis](https://isss608-ay2025-26apr.netlify.app/outline/lesson05_outline) and selected chapters from *R for Visual Analytics*:
+
+- [Chapter 6: Visual Correlation Analysis](https://r4va.netlify.app/chap06)
+- [Chapter 13: Creating Ternary Plot with R](https://r4va.netlify.app/chap13)
+- [Chapter 14: Heatmap for Visualising and Analysing Multivariate Data](https://r4va.netlify.app/chap14)
+- [Chapter 15: Visual Multivariate Analysis with Parallel Coordinates Plot](https://r4va.netlify.app/chap15)
+- [Chapter 16: Treemap Visualisation with R](https://r4va.netlify.app/chap16)
+
+The main goal of this exercise is to learn how different multivariate graphics reveal different types of analytical structure. In particular, we will learn how to:
+
+- examine pairwise relationships by using a scatterplot matrix and a correlogram,
+- visualise compositional data by using a ternary plot,
+- compare many entities and variables simultaneously by using a heatmap,
+- study multivariate profiles by using parallel coordinates, and
+- visualise hierarchical data by using treemaps.
+
+The exercise uses the following datasets:
+
+- `wine_quality.csv`
+- `respopagsex2000to2018_tidy.csv`
+- `WHData-2018.csv`
+- `realis2018.csv`
+
+## Getting Started
+
+### Installing and Loading R Packages
+
+```{r}
+pacman::p_load(
+  tidyverse, plotly, ggtern, corrplot, GGally,
+  heatmaply, parallelPlot, treemap, treemapify,
+  viridis, htmlwidgets, knitr
+)
+```
+
+# 6 Visual Correlation Analysis
+
+## 6.1 Overview
+
+Correlation analysis is useful when we want to understand the strength and direction of linear relationships among multiple numerical variables. In this section, we use the wine quality dataset to compare the eleven physicochemical attributes of wine.
+
+## 6.2 Importing Wine Quality Data
+
+```{r}
+wine <- read_csv("../../data/wine_quality.csv", show_col_types = FALSE)
+wine_num <- wine %>% select(1:11)
+
+kable(head(wine), format = "html")
+```
+
+## 6.3 Plotting a Scatterplot Matrix with `pairs()`
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+pairs(
+  wine_num,
+  pch = 20,
+  cex = 0.25,
+  col = scales::alpha("#2c7fb8", 0.18),
+  main = "Scatterplot Matrix of Wine Quality Attributes"
+)
+```
+
+The scatterplot matrix is a compact way to perform a first scan of the data. Dense linear bands suggest stronger positive or negative relationships, whereas diffuse point clouds suggest weaker associations.
+
+## 6.4 Plotting a Correlogram with `corrplot`
+
+```{r}
+#| fig-width: 10
+#| fig-height: 8
+wine_cor <- cor(wine_num)
+
+corrplot(
+  wine_cor,
+  method = "color",
+  type = "upper",
+  order = "hclust",
+  addCoef.col = "black",
+  tl.col = "black",
+  tl.srt = 45,
+  tl.cex = 0.75,
+  number.cex = 0.5
+)
+```
+
+The correlogram provides a clearer summary of the same relationships. In this case, variables such as density, residual sugar and total sulfur dioxide show stronger positive association, whereas alcohol tends to be negatively associated with density.
+
+# 13 Creating Ternary Plot with R
+
+## 13.1 Overview
+
+Ternary plots are designed for compositional data in which three parts add up to a meaningful whole. In this section, we examine the age structure of Singapore subzones by grouping the population into young, active and old age segments.
+
+## 13.2 Importing and Preparing Population Data
+
+```{r}
+pop_data <- read_csv("../../data/respopagsex2000to2018_tidy.csv", show_col_types = FALSE)
+
+agpop_mutated <- pop_data %>%
+  mutate(
+    age_group = case_when(
+      AG %in% c("AGE0-4", "AGE05-9", "AGE10-14", "AGE15-19", "AGE20-24") ~ "YOUNG",
+      AG %in% c("AGE25-29", "AGE30-34", "AGE35-39", "AGE40-44",
+                "AGE45-49", "AGE50-54", "AGE55-59", "AGE60-64") ~ "ACTIVE",
+      TRUE ~ "OLD"
+    )
+  ) %>%
+  group_by(PA, SZ, Year, age_group) %>%
+  summarise(Population = sum(Population), .groups = "drop") %>%
+  pivot_wider(names_from = age_group, values_from = Population, values_fill = 0) %>%
+  mutate(
+    TOTAL = YOUNG + ACTIVE + OLD,
+    Year = as.character(Year)
+  ) %>%
+  filter(Year == "2018", TOTAL > 0) %>%
+  mutate(
+    YOUNG_SHARE = YOUNG / TOTAL,
+    ACTIVE_SHARE = ACTIVE / TOTAL,
+    OLD_SHARE = OLD / TOTAL
+  )
+
+kable(head(agpop_mutated), format = "html")
+```
+
+## 13.3 Plotting a Static Ternary Plot with `ggtern`
+
+```{r}
+#| fig-width: 7
+#| fig-height: 6
+ggtern(
+  data = agpop_mutated,
+  aes(x = YOUNG_SHARE, y = ACTIVE_SHARE, z = OLD_SHARE)
+) +
+  geom_point(color = "#1f78b4", alpha = 0.55, size = 1.2) +
+  labs(
+    title = "Population Structure of Singapore Subzones, 2018",
+    subtitle = "Each point represents a subzone",
+    T = "Young",
+    L = "Active",
+    R = "Old"
+  ) +
+  theme_rgbw()
+```
+
+The ternary plot maps each subzone by the relative composition of young, economically active and older residents. Points closer to a vertex indicate stronger dominance of that demographic segment.
+
+## 13.4 Plotting an Interactive Ternary Plot with `plotly`
+
+```{r}
+plot_ly(
+  agpop_mutated,
+  a = ~YOUNG_SHARE,
+  b = ~ACTIVE_SHARE,
+  c = ~OLD_SHARE,
+  type = "scatterternary",
+  mode = "markers",
+  text = ~paste(
+    "Planning Area:", PA,
+    "<br>Subzone:", SZ,
+    "<br>Young:", scales::percent(YOUNG_SHARE, accuracy = 0.1),
+    "<br>Active:", scales::percent(ACTIVE_SHARE, accuracy = 0.1),
+    "<br>Old:", scales::percent(OLD_SHARE, accuracy = 0.1)
+  ),
+  hoverinfo = "text",
+  marker = list(size = 4, color = "#0b559f", opacity = 0.6)
+) %>%
+  layout(
+    title = "Interactive Ternary Plot of Population Structure",
+    ternary = list(
+      aaxis = list(title = "Young", tickformat = ".0%"),
+      baxis = list(title = "Active", tickformat = ".0%"),
+      caxis = list(title = "Old", tickformat = ".0%")
+    )
+  )
+```
+
+# 14 Heatmap for Visualising and Analysing Multivariate Data
+
+## 14.1 Overview
+
+Heatmaps are useful when we need to compare many observations across many variables at the same time. In this section, we use the 2018 World Happiness data to identify cross-country similarities and differences across several well-being indicators.
+
+## 14.2 Importing World Happiness Data
+
+```{r}
+wh <- read_csv("../../data/WHData-2018.csv", show_col_types = FALSE)
+
+wh_matrix <- wh %>%
+  select(
+    `Happiness score`,
+    `GDP per capita`,
+    `Social support`,
+    `Healthy life expectancy`,
+    `Freedom to make life choices`,
+    Generosity,
+    `Perceptions of corruption`
+  ) %>%
+  as.matrix()
+
+rownames(wh_matrix) <- wh$Country
+
+kable(head(wh), format = "html")
+```
+
+## 14.3 Plotting a Static Heatmap
+
+```{r}
+#| fig-width: 10
+#| fig-height: 12
+heatmap(
+  wh_matrix,
+  Rowv = NA,
+  Colv = NA,
+  scale = "column",
+  cexRow = 0.45,
+  cexCol = 0.8,
+  margins = c(12, 6),
+  main = "Static Heatmap of World Happiness Measures (2018)"
+)
+```
+
+Column-wise scaling standardises the seven indicators so that countries can be compared more fairly across variables measured on different scales. Countries with similar profiles tend to display similar colour bands.
+
+## 14.4 Plotting an Interactive Heatmap with `heatmaply`
+
+```{r}
+heatmaply(
+  wh_matrix,
+  scale = "column",
+  colors = viridis(256),
+  xlab = "Variables",
+  ylab = "Countries",
+  main = "Interactive Cluster Heatmap of World Happiness Measures"
+)
+```
+
+# 15 Visual Multivariate Analysis with Parallel Coordinates Plot
+
+## 15.1 Overview
+
+Parallel coordinates plots are suitable for comparing high-dimensional observations. Instead of examining one pair of variables at a time, we place several variables on parallel axes and inspect the profile traced by each observation.
+
+## 15.2 Plotting a Static Parallel Coordinates Plot
+
+```{r}
+#| fig-width: 10
+#| fig-height: 7
+ggparcoord(
+  data = wh,
+  columns = 7:12,
+  groupColumn = 2,
+  scale = "uniminmax",
+  alphaLines = 0.15,
+  boxplot = TRUE,
+  title = "Parallel Coordinates Plot of World Happiness Variables"
+) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 30, hjust = 1),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+Parallel coordinates place each numerical variable on a separate vertical axis. This makes it possible to compare regional multivariate profiles and to spot unusual combinations of GDP, social support, health, freedom and perceived corruption.
+
+## 15.3 Plotting an Interactive Parallel Plot
+
+```{r}
+pp_data <- wh %>%
+  select(
+    Region,
+    `GDP per capita`,
+    `Social support`,
+    `Healthy life expectancy`,
+    `Freedom to make life choices`,
+    Generosity,
+    `Perceptions of corruption`
+  ) %>%
+  as.data.frame()
+
+parallelPlot(
+  pp_data,
+  categorical = list(Region = unique(pp_data$Region)),
+  histoVisibility = names(pp_data)[-1],
+  refColumnDim = "Region",
+  rotateTitle = TRUE,
+  width = 950,
+  height = 520
+)
+```
+
+# 16 Treemap Visualisation with R
+
+## 16.1 Overview
+
+Treemaps are useful when the data have a hierarchical structure and the analyst needs to compare both size and colour-coded value in a compact space. In this section, we use REALIS transaction data to study the resale condominium market in Singapore.
+
+## 16.2 Importing and Summarising REALIS Data
+
+```{r}
+realis2018 <- read_csv("../../data/realis2018.csv", show_col_types = FALSE)
+
+realis2018_summarised <- realis2018 %>%
+  group_by(
+    `Project Name`,
+    `Planning Region`,
+    `Planning Area`,
+    `Property Type`,
+    `Type of Sale`
+  ) %>%
+  summarise(
+    `Total Unit Sold` = sum(`No. of Units`, na.rm = TRUE),
+    `Total Area` = sum(`Area (sqm)`, na.rm = TRUE),
+    `Median Unit Price ($ psm)` = median(`Unit Price ($ psm)`, na.rm = TRUE),
+    `Median Transacted Price` = median(`Transacted Price ($)`, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+realis2018_selected <- realis2018_summarised %>%
+  filter(`Property Type` == "Condominium", `Type of Sale` == "Resale")
+
+kable(head(realis2018_selected), format = "html")
+```
+
+## 16.3 Plotting a Static Treemap with `treemap`
+
+```{r}
+treemap(
+  realis2018_selected,
+  index = c("Planning Region", "Planning Area", "Project Name"),
+  vSize = "Total Unit Sold",
+  vColor = "Median Unit Price ($ psm)",
+  type = "manual",
+  palette = "Blues",
+  title = "Resale Condominium by Planning Region and Planning Area, 2018",
+  title.legend = "Median Unit Price (S$ per sq. m)"
+)
+```
+
+The area of each rectangle represents the total units sold, while the colour intensity reflects the median unit price per square metre. This allows us to compare transaction volume and price level simultaneously within the real estate hierarchy.
+
+## 16.4 Plotting a Treemap with `treemapify`
+
+```{r}
+#| fig-width: 10
+#| fig-height: 7
+ggplot(
+  realis2018_selected,
+  aes(
+    area = `Total Unit Sold`,
+    fill = `Median Unit Price ($ psm)`,
+    subgroup = `Planning Region`,
+    subgroup2 = `Planning Area`
+  )
+) +
+  geom_treemap() +
+  geom_treemap_subgroup_border(color = "white", linewidth = 1) +
+  geom_treemap_subgroup2_border(color = "white", linewidth = 0.5) +
+  geom_treemap_subgroup_text(
+    place = "centre",
+    grow = TRUE,
+    alpha = 0.9,
+    colour = "white",
+    fontface = "bold"
+  ) +
+  scale_fill_gradient(low = "#d6efff", high = "#084081") +
+  labs(
+    title = "Treemap of Resale Condominiums in 2018",
+    fill = "Median Unit Price\n(S$ per sq. m)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+# Summary
+
+Hands-on Exercise 5 brings together five complementary multivariate visualisation techniques:
+
+- correlation matrix for pairwise relationships,
+- ternary plot for compositional structure,
+- heatmap for clustered cross-country comparison,
+- parallel coordinates for high-dimensional comparison, and
+- treemap for hierarchical space-constrained data.
+
+Together, these methods extend the visual analytics toolkit beyond univariate and bivariate analysis, allowing us to explore structure, correlation, hierarchy and multivariate patterns more effectively.
