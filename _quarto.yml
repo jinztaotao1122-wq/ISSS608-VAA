@@ -18,12 +18,6 @@ website:
             href: "Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html"
           - text: "Hands-on Exercise 5"
             href: "Hands-on_EX/Hands-on_Ex05/Hands-on_Ex05.html"
-      - text: "Take-home Exercise"
-        menu:
-          - text: "TH Ex 1 Report"
-            href: "TH_EX/TH_Ex01/TH_Ex01.html"
-          - text: "TH Ex 1 Executive Summary"
-            href: "TH_EX/TH_Ex01/TH_Ex01_presentation.html"
     right:
       - href: index.qmd
         text: Home
