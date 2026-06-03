@@ -777,9 +777,9 @@
     "text": "References\n\nEspinosa, P., Lledo, J., & Atance, D. (2026). A detailed dataset of motor insurance policies with coverage-specific financial information. Mendeley Data.\nISSS608 Take-home Exercise 1 assignment brief.\nWickham, H., Cetinkaya-Rundel, M., & Grolemund, G. (2023). R for Data Science, 2e.\n\n\nThe report contains full data preparation details, code, visual methods and statistical validation. These references support the data source, assignment context and tidyverse workflow used throughout the analysis."
   },
   {
-    "objectID": "Hands-on_EX/Hands-on_Ex07/Hands-on_Ex07.html",
-    "href": "Hands-on_EX/Hands-on_Ex07/Hands-on_Ex07.html",
-    "title": "Hands-on Exercise 7",
+    "objectID": "Hands-on_EX/Hands-on_Ex06/Hands-on_Ex06.html",
+    "href": "Hands-on_EX/Hands-on_Ex06/Hands-on_Ex06.html",
+    "title": "Hands-on Exercise 6",
     "section": "",
     "text": "Modelling, visualising and analysing network data with R using tidygraph, ggraph and visNetwork. This hands-on exercise covers network objects, layouts, facet graphs, centrality metrics, communities and interactive network views."
   }
