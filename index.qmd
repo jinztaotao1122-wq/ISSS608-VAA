@@ -3,3 +3,5 @@ title: "ISSS608-VAA"
 ---
 
 Welcome to **ISSS608 Visual Analytics and Applications.** In this website you will find coursework prepared for this course.
+
+- [Hands-on Exercise 7](Hands-on_EX/Hands-on_Ex07/Hands-on_Ex07.html)
