@@ -91,7 +91,8 @@ body {
 
 .mc-grid,
 .mc-figure-grid,
-.mc-evidence-grid {
+.mc-evidence-grid,
+.mc-showcase-grid {
   display: grid;
   gap: 1rem;
 }
@@ -181,21 +182,52 @@ body {
   margin-top: 1rem;
 }
 
+.mc-showcase-grid {
+  grid-template-columns: 1.2fr 1fr;
+  margin-top: 1rem;
+}
+
 .mc-figure-card {
   padding: 1rem;
+}
+
+.mc-wide-figure {
+  margin-top: 1rem;
+  padding: 1.15rem;
 }
 
 .mc-figure-card img {
   width: 100%;
   border-radius: 14px;
   border: 1px solid #e8eef0;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.95rem;
+  box-shadow: 0 18px 40px rgba(23, 36, 47, 0.10);
+}
+
+.mc-wide-figure img {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid #e8eef0;
+  margin-bottom: 1rem;
+  box-shadow: 0 24px 52px rgba(23, 36, 47, 0.12);
 }
 
 .mc-figure-card h3 {
   margin-bottom: 0.35rem;
   color: var(--mc-navy);
   font-size: 1.05rem;
+}
+
+.mc-wide-figure h3 {
+  margin-bottom: 0.45rem;
+  color: var(--mc-navy);
+  font-size: 1.28rem;
+}
+
+.mc-figure-card p,
+.mc-wide-figure p {
+  margin-bottom: 0;
+  line-height: 1.72;
 }
 
 .mc-mini-label {
@@ -260,7 +292,8 @@ pre code {
 @media (max-width: 1100px) {
   .mc-grid,
   .mc-evidence-grid,
-  .mc-figure-grid {
+  .mc-figure-grid,
+  .mc-showcase-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -273,7 +306,8 @@ pre code {
 
   .mc-grid,
   .mc-evidence-grid,
-  .mc-figure-grid {
+  .mc-figure-grid,
+  .mc-showcase-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -487,22 +521,47 @@ decision by Legal and Social to treat third-party publication as grounds for imm
 
 <p class="mc-caption">The table above exposes the decisive contradiction in the log: the actual public confirmation appears at 17:25-17:26, while the formal lift only arrives at 18:00.</p>
 
+### Escalation pressure over time
+
+<figure class="mc-wide-figure mc-figure-card">
+  <img src="figures/figure_5_pressure_timeline.png" alt="Escalation pressure across the investigation window">
+  <span class="mc-mini-label">Figure 1</span>
+  <h3>Escalation pressure and channel mix across the full investigation window</h3>
+  <p>
+    This chart shows why the final leak should not be treated as a single isolated post. Communication volume
+    intensifies as the story matures, and the internal mix shifts from routine huddles into increasingly dense
+    one-to-one and side-huddle coordination. The 29 May slip, the 30 May installation of Judge, and the 5 June
+    breach-hour spike appear as part of one continuous escalation pattern.
+  </p>
+</figure>
+
 ### Visual reconstruction
 
-<div class="mc-figure-grid">
+<figure class="mc-wide-figure mc-figure-card">
+  <img src="figures/figure_4_breach_timeline.png" alt="Embargo breach causal timeline">
+  <span class="mc-mini-label">Figure 2</span>
+  <h3>Embargo-breach causal timeline</h3>
+  <p>
+    The pivotal transition happens between the 15:08 Judge warning and the 17:25 personal-account
+    confirmation. The breach is not one rogue post. It is the last step in a coordinated release path
+    that progressively routes around formal oversight.
+  </p>
+</figure>
+
+<div class="mc-showcase-grid">
   <figure class="mc-figure-card">
-    <img src="figures/figure_4_breach_timeline.png" alt="Embargo breach timeline">
-    <span class="mc-mini-label">Figure 1</span>
-    <h3>Embargo-breach causal timeline</h3>
+    <img src="figures/figure_6_coordination_network.png" alt="Breach-window coordination network">
+    <span class="mc-mini-label">Figure 3</span>
+    <h3>Breach-window coordination network</h3>
     <p>
-      The pivotal transition happens between the 15:08 Judge warning and the 17:25 personal-account
-      confirmation. The figure shows that the breach is not one isolated post; it is the last step
-      in a coordinated sequence.
+      The decisive coordination is concentrated around a Legal-Social-Platform Trust core, with PR and PR Intern
+      pulled in as execution partners. This view makes the human relationships behind the release logic easier to
+      see than a simple linear timeline alone.
     </p>
   </figure>
   <figure class="mc-figure-card">
     <img src="figures/figure_3_participant_presence.png" alt="Critical hour participant presence">
-    <span class="mc-mini-label">Figure 2</span>
+    <span class="mc-mini-label">Figure 4</span>
     <h3>Critical-hour participant presence</h3>
     <p>
       Judge disappears after 15:00, while Legal and Social remain active through every round. PR-Intern
@@ -603,10 +662,21 @@ Platform Trust become visible public voices even though they were not baseline c
 
 ### Comparison visuals
 
+<figure class="mc-wide-figure mc-figure-card">
+  <img src="figures/figure_7_behavior_drift_heatmap.png" alt="Behavior drift heatmap">
+  <span class="mc-mini-label">Figure 5</span>
+  <h3>Behavior drift heatmap across actors, phases, and public channels</h3>
+  <p>
+    This heatmap makes the novelty of the breach behavior immediately visible. Baseline public activity is mostly
+    official and concentrated in expected communications roles. On the crisis day, Legal and Platform Trust become
+    visible public narrators, while personal and anonymous channels dominate the public signal.
+  </p>
+</figure>
+
 <div class="mc-figure-grid">
   <figure class="mc-figure-card">
     <img src="figures/figure_1_channel_shift.png" alt="Public posting shift">
-    <span class="mc-mini-label">Figure 3</span>
+    <span class="mc-mini-label">Figure 6</span>
     <h3>Official to personal/anonymous channel shift</h3>
     <p>
       The communication system becomes less centralized under stress. Official posts drop from the dominant
@@ -616,7 +686,7 @@ Platform Trust become visible public voices even though they were not baseline c
   </figure>
   <figure class="mc-figure-card">
     <img src="figures/figure_2_public_sequence_0605.png" alt="Public post sequence on 2046-06-05">
-    <span class="mc-mini-label">Figure 4</span>
+    <span class="mc-mini-label">Figure 7</span>
     <h3>Public post sequence on 2046-06-05</h3>
     <p>
       The last official post appears at <strong>15:20</strong>. The first explicit merger confirmation does

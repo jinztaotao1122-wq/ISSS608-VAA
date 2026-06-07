@@ -1,7 +1,33 @@
 ---
-title: "ISSS608-VAA"
+title: "ISSS608 AY2025-26 April Term"
+page-layout: full
 ---
 
-Welcome to **ISSS608 Visual Analytics and Applications.** In this website you will find coursework prepared for this course.
+<section class="home-hero">
+  <div class="hero-kicker">Visual Analytics and Applications</div>
+  <h1>ISSS608 AY2025-26 April Term</h1>
+  <p>
+    Welcome to my coursework website for <strong>ISSS608 Visual Analytics and Applications</strong>.
+    This site brings together hands-on exercises, take-home reports, and visual storytelling work
+    developed across the term.
+  </p>
+  <div class="hero-actions"><a class="hero-button primary" href="TH_EX/TH_Ex02/TH_Ex02.html">Explore Take-home Exercise 2</a><a class="hero-button" href="TH_EX/TH_Ex01/TH_Ex01.html">View Take-home Exercise 1</a><a class="hero-button subtle" href="TH_EX/TH_Ex01/TH_Ex01_presentation.html">Open Executive Slides</a></div>
+</section>
 
-- [Hands-on Exercise 6](Hands-on_EX/Hands-on_Ex06/Hands-on_Ex06.html)
+<section class="home-section">
+  <div class="section-heading"><span>Course Information</span><h2>Class details at a glance</h2></div>
+
+  <div class="course-grid"><div class="course-card"><strong>Instructor</strong><span><a href="https://www.smu.edu.sg/faculty/profile/9618/KAM-Tin-Seong">Dr. Kam Tin Seong</a></span><em>Associate Professor of Information Systems (Practice)</em></div><div class="course-card"><strong>Lesson Time</strong><span>Saturday 12:30pm to 3:45pm</span><em>Weekly seminar and hands-on learning session.</em></div><div class="course-card"><strong>Venue</strong><span><a href="https://isss608-ay2025-26apr.netlify.app/lesson">Weekly lesson plan</a></span><em>Refer to the lesson plan for venue and weekly topics.</em></div><div class="course-card"><strong>Consultation</strong><span><a href="https://docs.google.com/spreadsheets/d/1Zz3_hqKc4qA5YFMTy2DJzlEd5EJRaDzHqUhWMTm-zxI/edit?usp=sharing">Booking link</a></span><em>Use the consultation sheet to arrange support.</em></div><div class="course-card"><strong>Virtual Room</strong><span><a href="https://smu-sg.zoom.us/j/91431787118?pwd=UVoyN3ZrYkRtcVo0WDVER0ZWRFlOQT09">Zoom</a></span><em>Online meeting room for virtual class activities.</em></div><div class="course-card highlight"><strong>Course Focus</strong><span>Visual analytics</span><em>Combining data visualisation, statistics and analytical reasoning for insight discovery.</em></div></div>
+</section>
+
+<section class="home-section">
+  <div class="section-heading"><span>Featured Reports</span><h2>Current submissions</h2></div>
+
+  <div class="submission-grid"><div class="feature-panel highlight-panel"><div><p class="panel-label">VAST Challenge 2026 MC1</p><h3>Take-home Exercise 2</h3><p>A visual investigation into TenantThread's embargo breach, focusing on key events, decision points, behavioral drift, and leading indicators across an AI-agent communication system.</p></div><div class="feature-links"><a href="TH_EX/TH_Ex02/TH_Ex02.html">Open TH Ex 2 Report</a></div></div><div class="feature-panel"><div><p class="panel-label">Motor insurance portfolio</p><h3>Take-home Exercise 1</h3><p>A profitability and volatility analysis of a real motor insurance portfolio using tidyverse, ggplot2, and business-oriented visual analytics.</p></div><div class="feature-links"><a href="TH_EX/TH_Ex01/TH_Ex01.html">Technical Report</a><a href="TH_EX/TH_Ex01/TH_Ex01_presentation.html">Executive Summary Slides</a></div></div></div>
+</section>
+
+<section class="home-section">
+  <div class="section-heading"><span>Coursework Library</span><h2>Hands-on exercises</h2></div>
+
+  <div class="exercise-grid"><a href="Hands-on_EX/Hands-on_Ex01/Hands-on_Ex01.html">Hands-on Exercise 1</a><a href="Hands-on_EX/Hands-on_Ex02/Hands-on_Ex02.html">Hands-on Exercise 2</a><a href="Hands-on_EX/Hands-on_Ex03/Hands-on_Ex03.html">Hands-on Exercise 3</a><a href="Hands-on_EX/Hands-on_Ex04/Hands-on_Ex04.html">Hands-on Exercise 4</a><a href="Hands-on_EX/Hands-on_Ex05/Hands-on_Ex05.html">Hands-on Exercise 5</a><a href="Hands-on_EX/Hands-on_Ex06/Hands-on_Ex06.html">Hands-on Exercise 6</a></div>
+</section>
