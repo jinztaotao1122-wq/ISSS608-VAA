@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Jin Zhang">
-  <meta name="dcterms.date" content="2026-05-09">
-  <title>ISSS608-VAA – Take-home Exercise 1</title>
+  <meta name="dcterms.date" content="2026-05-01">
+  <title>ISSS608-VAA – Motor Insurance Portfolio: Profitability and Volatility</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -34,9 +34,12 @@
     }
   </style>
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-0427d8d92a431aa6a6430e53ec02a470.css">
+  <link rel="stylesheet" href="../../styles.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -131,8 +134,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Take-home Exercise 1</h1>
-  <p class="subtitle">Visual Analytics for Data Discovery</p>
+  <h1 class="title">Motor Insurance Portfolio: Profitability and Volatility</h1>
+  <p class="subtitle">ISSS608 Take-home Exercise 1</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -142,17 +145,12 @@ Jin Zhang
 </div>
 </div>
 
-  <p class="date">2026-05-09</p>
+  <p class="date">2026-05-01</p>
 </section>
-<section id="study-goal" class="slide level2">
-<h2>Study Goal</h2>
-<ul>
-<li>Identify which factors weaken portfolio profitability.</li>
-<li>Identify which factors increase portfolio volatility.</li>
-<li>Translate the findings into underwriting and pricing actions.</li>
-</ul>
+<section class="slide level2">
+
 <aside class="notes">
-<p>This study uses a real motor insurance portfolio from Spain covering 2022 to 2024. The analysis focuses on profitability through loss ratio and on volatility through claim frequency and claim severity. The goal is not just to describe the portfolio, but to pinpoint the most actionable risk segments for an insurer.</p>
+<p>This executive summary turns the technical analysis into a management-facing story. The objective is to identify where the motor insurance portfolio is profitable, where it is volatile, and which segments should be prioritised for underwriting or pricing review.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -167,85 +165,25 @@ Jin Zhang
 </section>
 <section id="contents" class="slide level2">
 <h2>Contents</h2>
-<ol type="1">
-<li>Data and preparation</li>
-<li>Portfolio structure</li>
-<li>Profitability findings</li>
-<li>Volatility findings</li>
-<li>Recommendations</li>
-</ol>
-<aside class="notes">
-<p>The deck moves from context to action. I first summarise the data and the derived analytical measures, then show how the portfolio is structured, followed by the key profitability and volatility patterns. I close with recommendations that an underwriting or portfolio management team could use immediately.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="data-and-analytical-measures" class="slide level2">
-<h2>Data and Analytical Measures</h2>
-<div class="cell">
-<div class="cell-output-display">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Metric</th>
-<th style="text-align: left;">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Rows</td>
-<td style="text-align: left;">354,140</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Unique insured IDs</td>
-<td style="text-align: left;">185,678</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Policy years</td>
-<td style="text-align: left;">2022 to 2024</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Rows with zero premium</td>
-<td style="text-align: left;">49</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Rows with zero exposure</td>
-<td style="text-align: left;">49</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Rows with at least one claim</td>
-<td style="text-align: left;">14.3%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Average premium</td>
-<td style="text-align: left;">$296.72</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Exposure-weighted loss ratio</td>
-<td style="text-align: left;">70.3%</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Exposure-weighted claim frequency</td>
-<td style="text-align: left;">0.308</td>
-</tr>
-</tbody>
-</table>
+<div class="agenda-grid">
+<div class="agenda-card">
+<span class="num">1</span><strong>Baseline</strong><em>Portfolio scale, premium, incurred loss and overall loss ratio.</em>
+</div>
+<div class="agenda-card">
+<span class="num">2</span><strong>Distribution</strong><em>Premium shape, incurred loss skew and the policy-level loss tail.</em>
+</div>
+<div class="agenda-card">
+<span class="num">3</span><strong>Drivers</strong><em>Policy type, coverage, claims history and payment frequency.</em>
+</div>
+<div class="agenda-card">
+<span class="num">4</span><strong>Validation</strong><em>Distribution tests and a claim frequency model with exposure offset.</em>
+</div>
+<div class="agenda-card">
+<span class="num">5</span><strong>Actions</strong><em>Practical underwriting and monitoring implications.</em>
 </div>
 </div>
-<ul>
-<li>Derived metrics: <code>loss_ratio</code>, <code>claim_frequency</code>, <code>claim_severity</code>, <code>premium_per_exposure</code></li>
-<li>49 rows with zero premium and zero exposure were excluded only from ratio calculations</li>
-</ul>
 <aside class="notes">
-<p>The dataset contains 354,140 rows and almost 186,000 unique insured IDs. I derived the main insurance performance metrics directly from premium, incurred loss and exposure fields. Because a small number of rows had zero premium and zero exposure, I kept them in the base dataset but excluded them from ratio calculations to avoid invalid values.</p>
+<p>The deck moves from the whole portfolio into progressively sharper segment views. I first establish the baseline, then show the skewed distribution of losses, then move into policy type, coverage and customer signals. The final slides translate the evidence into actions.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -258,33 +196,30 @@ Jin Zhang
           display:block!important;
       }</style></aside>
 </section>
-<section id="portfolio-structure" class="slide level2">
-<h2>Portfolio Structure</h2>
-
-<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"><aside class="notes">
-<p>The structure of the portfolio matters because the dominant products have the greatest influence on overall results. Most exposure sits in CC and COMP_E. That means any profitability problem within comprehensive or broad third-party products can materially affect total portfolio performance.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="profitability-distribution" class="slide level2">
-<h2>Profitability Distribution</h2>
-
-<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><ul>
-<li>Median loss ratio is zero because many policies have no claims.</li>
-<li>Exposure-weighted loss ratio is about 70%.</li>
-<li>The tail remains important for volatility management.</li>
-</ul>
+<section id="portfolio-baseline" class="slide level2">
+<h2>Portfolio Baseline</h2>
+<div class="metric-grid">
+<div class="metric-card">
+<strong>Policy transactions</strong><span>354,140</span><em>185,678 insured IDs across 2022-2024.</em>
+</div>
+<div class="metric-card">
+<strong>Exposure years</strong><span>250,325.9</span><em>Exposure-weighted comparisons are used for frequency.</em>
+</div>
+<div class="metric-card">
+<strong>Total premium</strong><span>EUR 105,079,669</span><em>Portfolio scale before incurred loss.</em>
+</div>
+<div class="metric-card">
+<strong>Total incurred</strong><span>EUR 73,864,811</span><em>Paid and reserved claim cost.</em>
+</div>
+<div class="metric-card">
+<strong>Loss ratio</strong><span>70.3%</span><em>Profitable overall, but uneven by segment.</em>
+</div>
+<div class="metric-card">
+<strong>Underwriting profit</strong><span>EUR 31,214,859</span><em>The headline hides a concentrated claims tail.</em>
+</div>
+</div>
 <aside class="notes">
-<p>The distribution is strongly right-skewed. Many policies have no claims in the observed period, which drives the median to zero. However, the right tail is operationally important because a relatively small share of claim-heavy policies drives volatility and can erode profitability quickly.</p>
+<p>The portfolio contains 354,140 policy transactions and about 250,326 exposure years. The overall loss ratio is about 70.3%, which means the portfolio is profitable in aggregate. The important point is that aggregate profitability is not evenly distributed; we need segment and tail views to identify where underperformance and volatility are coming from.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -297,11 +232,29 @@ Jin Zhang
           display:block!important;
       }</style></aside>
 </section>
-<section id="policy-type-drives-profitability" class="slide level2">
-<h2>Policy Type Drives Profitability</h2>
+<section id="policy-mix" class="slide level2">
+<h2>Policy Mix</h2>
 
-<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"><aside class="notes">
-<p>Policy type is the clearest performance separator. COMP_N has the highest loss ratio and the highest claim frequency, followed by COMP_E. TP performs best. This indicates that coverage breadth and pricing structure are critical drivers of portfolio profitability and should be a first management priority.</p>
+<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch"><aside class="notes">
+<p>Combined cover is the largest premium block, followed by comprehensive-with-excess. Comprehensive-no-excess is smaller, but its colour already signals a weaker loss ratio. This tells us that a segment does not need to be the largest by premium to matter for portfolio quality.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="loss-distribution" class="slide level2">
+<h2>Loss Distribution</h2>
+
+<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"><p>88.1% of transactions have zero incurred loss, while 9.0% exceed break-even.</p>
+<aside class="notes">
+<p>The portfolio is zero-inflated and right-skewed. Most transactions have no incurred loss, but the policies that do claim can produce a very wide range of costs. This is why mean loss ratio alone is not enough; volatility and tail concentration are central to the story.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -317,8 +270,8 @@ Jin Zhang
 <section id="deterioration" class="slide level2">
 <h2>2024 Deterioration</h2>
 
-<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><aside class="notes">
-<p>The 2024 results are worse across most product lines, not just one isolated segment. The most serious issue is COMP_N, which crosses the breakeven threshold. This suggests that management should treat the deterioration as a current pricing or claims-cost problem, rather than a purely historical issue.</p>
+<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"><aside class="notes">
+<p>Loss ratio was stable around the mid-60% range in 2022 and 2023, then moved to about 74.7% in 2024. This does not necessarily mean one root cause; it tells us that year should be treated as an important context variable when interpreting the segment results.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -331,11 +284,63 @@ Jin Zhang
           display:block!important;
       }</style></aside>
 </section>
-<section id="underwriting-signals-matter" class="slide level2">
-<h2>Underwriting Signals Matter</h2>
+<section id="policy-type-drives-profitability" class="slide level2">
+<h2>Policy Type Drives Profitability</h2>
+
+<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><aside class="notes">
+<p>Comprehensive-no-excess has the highest loss ratio and the highest claim frequency. This makes intuitive business sense because no-excess policies expose the insurer to more small and medium claims. It is the clearest product-level candidate for pricing or deductible review.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="volatility-differs-by-policy-type" class="slide level2">
+<h2>Volatility Differs by Policy Type</h2>
+
+<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"><p>Kruskal-Wallis and Fligner-Killeen tests both return <code>p &lt; 2.2e-16</code>.</p>
+<aside class="notes">
+<p>The difference is not just in average loss ratio. The distributions also differ in dispersion, which matters for volatility. Both tests strongly reject equality across policy types: the Kruskal-Wallis test validates distributional differences, while the Fligner-Killeen test validates variance differences.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="coverage-view" class="slide level2">
+<h2>Coverage View</h2>
+
+<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><aside class="notes">
+<p>Liability and property damage have the highest strategic importance because they combine large premium shares with high loss ratios. Occupants coverage has high average severity, but few claims, so it is more of a tail-monitoring issue than a broad profitability driver.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="customer-signals" class="slide level2">
+<h2>Customer Signals</h2>
 
 <img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"><aside class="notes">
-<p>Two operational signals stand out. First, favourable bonus scores are associated with lower claim frequency, which makes them a strong underwriting input. Second, annual billing performs better than semiannual and quarterly billing. Instalment plans may be acting as a proxy for higher-risk behaviour or weaker policyholder quality.</p>
+<p>Poor and neutral claims-history groups show weaker results than good claims-history policies. Semiannual and quarterly payment frequencies are also less favourable than annual payment. These variables may be proxies for customer mix or tenure, so they should be treated as diagnostic flags before being used directly as pricing actions.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -348,11 +353,11 @@ Jin Zhang
           display:block!important;
       }</style></aside>
 </section>
-<section id="volatility-is-highest-in-comprehensive-covers" class="slide level2">
-<h2>Volatility is Highest in Comprehensive Covers</h2>
+<section id="frequency-model" class="slide level2">
+<h2>Frequency Model</h2>
 
 <img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"><aside class="notes">
-<p>Volatility is not only a frequency story. The claim severity distributions show that comprehensive products also carry wider and heavier severity tails. That means these segments contribute more uncertainty to earnings, even when average loss ratios alone do not fully capture the problem.</p>
+<p>The model confirms that policy type remains the strongest signal after controlling for year, claims history, business origin, driver age, vehicle age, geography, payment frequency and fuel type. Comprehensive-no-excess is far above the third-party-only reference level, which supports the visual findings.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -365,17 +370,84 @@ Jin Zhang
           display:block!important;
       }</style></aside>
 </section>
-<section id="recommendations" class="slide level2">
-<h2>Recommendations</h2>
-<ol type="1">
-<li>Reprice or redesign <code>COMP_N</code> and <code>COMP_E</code>.</li>
-<li>Tighten renewal controls for portfolio business.</li>
-<li>Encourage annual billing and review instalment surcharges.</li>
-<li>Use bonus score and vehicle value more aggressively in segmentation.</li>
-<li>Investigate the 2024 deterioration immediately.</li>
-</ol>
+<section id="tail-concentration" class="slide level2">
+<h2>Tail Concentration</h2>
+
+<img data-src="TH_Ex01_presentation_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"><aside class="notes">
+<p>The top 1% of policy transactions by incurred loss accounts for about half of total incurred cost. This is the volatility story in one chart: underwriting and claims teams should not only track averages, but also build monitoring around large-loss concentration.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-to-do-next" class="slide level2">
+<h2>What To Do Next</h2>
+<div class="action-grid">
+<div class="action-card">
+<strong>1. Deductibles</strong><em>Review comprehensive-no-excess pricing and deductible design.</em>
+</div>
+<div class="action-card">
+<strong>2. 2024 Drilldown</strong><em>Separate exposure growth from severity pressure in liability and property damage.</em>
+</div>
+<div class="action-card">
+<strong>3. Tail Watch</strong><em>Monitor large-loss concentration instead of relying only on averages.</em>
+</div>
+<div class="action-card">
+<strong>4. Selection</strong><em>Validate payment and business-origin effects with tenure data.</em>
+</div>
+<div class="action-card">
+<strong>5. Rating Review</strong><em>Test vehicle, fuel and circulation signals as candidate rating refinements.</em>
+</div>
+</div>
 <aside class="notes">
-<p>The recommendations follow directly from the visual evidence. Product redesign and pricing review should start with comprehensive lines. Existing portfolio business needs closer monitoring than new business. Billing structure can be used as a practical management lever, and the 2024 deterioration deserves urgent diagnosis to separate pricing inadequacy from inflation or claim mix changes.</p>
+<p>The recommendations separate immediate portfolio review from longer-term modelling. The most direct action is the comprehensive-no-excess review. The second is to understand 2024 deterioration. The third is tail monitoring. The remaining actions should be explored with more data because they may represent customer selection effects rather than direct causes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="limitations" class="slide level2">
+<h2>Limitations</h2>
+<div class="purple-ribbon">
+<p><strong>Interpret as portfolio diagnostics, not final pricing indications.</strong> <span>The dataset does not include exact geography, claim dates, inflation indices, driving usage, policy tenure, detailed no-claims discount history or external socioeconomic data.</span></p>
+</div>
+<aside class="notes">
+<p>The analysis is intentionally transparent and reproducible, but it is still constrained by the available variables. A production actuarial workflow would need exposure validation, claim development checks, external enrichment and out-of-sample testing before turning these insights into rating changes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<ul>
+<li>Espinosa, P., Lledo, J., &amp; Atance, D. (2026). <em>A detailed dataset of motor insurance policies with coverage-specific financial information</em>. Mendeley Data.</li>
+<li>ISSS608 Take-home Exercise 1 assignment brief.</li>
+<li>Wickham, H., Cetinkaya-Rundel, M., &amp; Grolemund, G. (2023). <em>R for Data Science, 2e</em>.</li>
+</ul>
+<aside class="notes">
+<p>The report contains full data preparation details, code, visual methods and statistical validation. These references support the data source, assignment context and tidyverse workflow used throughout the analysis.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -404,6 +476,7 @@ Jin Zhang
   <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -419,14 +492,15 @@ Jin Zhang
       // https://revealjs.com/config/
       Reveal.initialize({
 'controlsAuto': true,
-'previewLinksAuto': false,
+'previewLinksAuto': true,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'smaller': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
  
         // Display controls in the bottom right corner
         controls: false,
@@ -551,7 +625,7 @@ Jin Zhang
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'fade',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
@@ -571,12 +645,12 @@ Jin Zhang
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1366,
 
-        height: 700,
+        height: 768,
 
         // Factor of the display size that should remain empty around the content
-        margin: 0.1,
+        margin: 6.0e-2,
 
         math: {
           mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
@@ -596,7 +670,7 @@ Jin Zhang
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,

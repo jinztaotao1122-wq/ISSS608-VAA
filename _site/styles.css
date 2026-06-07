@@ -1,1 +1,81 @@
-/* css styles */
+:root {
+  --ink: #1a1025;
+  --muted: #6b5c80;
+  --line: #d9d0e8;
+  --paper: #faf8fd;
+  --field: #f0ebf8;
+  --primary: #5b21b6;
+  --accent: #7c3aed;
+  --light-accent: #a78bfa;
+  --deep: #3b0764;
+  --soft: #ede9fe;
+}
+
+body {
+  color: var(--ink);
+  background: var(--paper);
+}
+
+h1, h2, h3 {
+  color: var(--primary);
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--deep);
+}
+
+.navbar {
+  background-color: var(--primary) !important;
+}
+
+.navbar-brand,
+.navbar .nav-link {
+  color: #fff !important;
+}
+
+.navbar .nav-link:hover {
+  color: var(--light-accent) !important;
+}
+
+.quarto-title-banner {
+  background:
+    linear-gradient(120deg, rgba(91, 33, 182, 0.94), rgba(124, 58, 237, 0.88)),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.12), rgba(255,255,255,.12) 1px, transparent 1px, transparent 11px);
+  color: white;
+}
+
+.callout-note {
+  border-left-color: var(--accent);
+}
+
+.callout-important {
+  border-left-color: var(--deep);
+}
+
+table {
+  font-size: 0.94rem;
+}
+
+.slide-logo {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+code {
+  background: var(--soft);
+  color: var(--primary);
+}
+
+.btn, .btn-primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn:hover {
+  background-color: var(--deep);
+  border-color: var(--deep);
+}

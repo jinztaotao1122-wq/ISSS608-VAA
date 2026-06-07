@@ -20,6 +20,14 @@ website:
             href: "Hands-on_EX/Hands-on_Ex05/Hands-on_Ex05.html"
           - text: "Hands-on Exercise 6"
             href: "Hands-on_EX/Hands-on_Ex06/Hands-on_Ex06.html"
+      - text: "Take-home Exercise"
+        menu:
+          - text: "Take-home Exercise 1 Report"
+            href: "TH_EX/TH_Ex01/TH_Ex01.html"
+          - text: "Take-home Exercise 1 Slides"
+            href: "TH_EX/TH_Ex01/TH_Ex01_presentation.html"
+          - text: "Take-home Exercise 2 Report"
+            href: "TH_EX/TH_Ex02/TH_Ex02.html"
     right:
       - href: index.qmd
         text: Home
